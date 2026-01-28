@@ -1,4 +1,4 @@
-<!-- Enhanced navbar with minimal and subtle login -->
+<!-- Enhanced navbar with mobile-friendly login modal -->
 <nav class="navbar" id="navbar">
     <a href="/" class="logo">
         <div class="logo-img">VI</div>
@@ -13,7 +13,7 @@
         <a href="/Blog" id="blog-link">Blogs</a>
         <a href="/Contact" id="contact-link">Contact</a>
 
-        <!-- Enhanced Space button with new icon -->
+        <!-- Enhanced Space button -->
         <div class="auth-dropdown">
             <button class="auth-toggle" id="authToggle">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="space-svg">
@@ -23,8 +23,8 @@
                 </svg>
                 <span class="user-text">Space</span>
             </button>
+            <!-- Desktop dropdown -->
             <div class="auth-dropdown-content" id="authDropdown">
-                <!-- Enhanced Login Type Toggle -->
                 <div class="login-type-toggle">
                     <span class="toggle-indicator" id="toggleIndicator"></span>
                     <button type="button" class="toggle-btn active" id="userToggle">
@@ -43,7 +43,6 @@
                     </button>
                 </div>
 
-                <!-- Enhanced User Login Form -->
                 <form action="/login" method="post" class="auth-form" id="userForm">
                     <div class="form-header">
                         <h3>Welcome Back</h3>
@@ -73,7 +72,6 @@
                     </a>
                 </form>
 
-                <!-- Enhanced Admin Login Form -->
                 <form action="/admin_login" method="POST" class="auth-form" id="adminForm" style="display: none;">
                     <div class="form-header admin-header">
                         <h3>Administrator Access</h3>
@@ -105,6 +103,85 @@
         <span></span>
     </button>
 </nav>
+
+<!-- Mobile Auth Modal -->
+<div class="auth-modal-overlay" id="authModalOverlay">
+    <div class="auth-modal" id="authModal">
+        <button class="modal-close" id="modalClose" aria-label="Close">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 6L6 18M6 6l12 12"/>
+            </svg>
+        </button>
+        
+        <div class="login-type-toggle">
+            <span class="toggle-indicator" id="toggleIndicatorMobile"></span>
+            <button type="button" class="toggle-btn active" id="userToggleMobile">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="toggle-icon">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                    <circle cx="12" cy="7" r="4"/>
+                </svg>
+                User
+            </button>
+            <button type="button" class="toggle-btn" id="adminToggleMobile">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="toggle-icon">
+                    <path d="M12 15l8-5-8 5-8 5 8 5z"/>
+                    <path d="M12 15l8-5v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V10l8 5z"/>
+                </svg>
+                Admin
+            </button>
+        </div>
+
+        <form action="/login" method="post" class="auth-form" id="userFormMobile">
+            <div class="form-header">
+                <h3>Welcome Back</h3>
+                <p>Sign in to your space</p>
+            </div>
+            <div class="input-group">
+                <input type="email" id="user-email-mobile" name="email" placeholder="Enter your email" required>
+            </div>
+            <div class="input-group">
+                <input type="password" id="user-password-mobile" name="pass" placeholder="Enter your password" required>
+            </div>
+            <button type="submit" class="login-btn">
+                Sign In
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="btn-icon">
+                    <path d="M5 12h14"/>
+                    <path d="M12 5l7 7-7 7"/>
+                </svg>
+            </button>
+            <a href="/register" class="create-account">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="link-icon">
+                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                    <circle cx="9" cy="7" r="4"/>
+                    <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                </svg>
+                Create new space
+            </a>
+        </form>
+
+        <form action="/admin_login" method="POST" class="auth-form" id="adminFormMobile" style="display: none;">
+            <div class="form-header admin-header">
+                <h3>Administrator Access</h3>
+                <p>Restricted to authorized personnel only</p>
+                <p class="admin-note">Single admin - registration unavailable</p>
+            </div>
+            <div class="input-group">
+                <input type="email" id="admin-email-mobile" name="email" placeholder="Admin email address" required>
+            </div>
+            <div class="input-group">
+                <input type="password" id="admin-password-mobile" name="pass" placeholder="Admin password" required>
+            </div>
+            <button type="submit" class="login-btn admin-btn">
+                Access
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="btn-icon">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                    <path d="M9 12l2 2 4-4"/>
+                </svg>
+            </button>
+        </form>
+    </div>
+</div>
 
 <style>
 :root {
@@ -139,6 +216,7 @@ body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    min-height: 100vh;
 }
 
 .navbar {
@@ -293,7 +371,7 @@ body {
     letter-spacing: 0.01em;
 }
 
-/* Enhanced dropdown styling */
+/* Enhanced dropdown styling - Desktop only */
 .auth-dropdown {
     position: relative;
 }
@@ -336,6 +414,92 @@ body {
         opacity: 1;
         transform: translateY(0) scale(1);
     }
+}
+
+/* Mobile Auth Modal */
+.auth-modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 9999;
+    animation: fadeIn 0.25s var(--transition-timing);
+}
+
+.auth-modal-overlay.show {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.auth-modal {
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 16px;
+    padding: 1.5rem;
+    width: 100%;
+    max-width: 420px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+    border: 1px solid var(--glass-border);
+    position: relative;
+    animation: modalSlideUp 0.3s var(--transition-timing);
+}
+
+@keyframes modalSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: rgba(241, 245, 249, 0.8);
+    border: none;
+    border-radius: 8px;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s var(--transition-timing);
+    z-index: 10;
+}
+
+.modal-close:hover {
+    background: rgba(226, 232, 240, 0.9);
+    transform: scale(1.05);
+}
+
+.modal-close svg {
+    width: 20px;
+    height: 20px;
+    color: var(--gray);
 }
 
 /* Enhanced toggle design */
@@ -652,6 +816,11 @@ body {
         display: block;
     }
     
+    /* Hide desktop dropdown on mobile */
+    .auth-dropdown-content {
+        display: none !important;
+    }
+    
     .nav-links {
         position: fixed;
         top: 0;
@@ -697,24 +866,6 @@ body {
         justify-content: center;
         padding: 0.85rem 1rem;
     }
-    
-    .auth-dropdown-content {
-        position: relative;
-        right: auto;
-        top: auto;
-        width: 100%;
-        min-width: auto;
-        max-width: none;
-        margin-top: 0.75rem;
-        padding: 1.1rem;
-        border-radius: 12px;
-    }
-    
-    .navbar.scrolled .auth-dropdown-content {
-        position: relative;
-        top: auto;
-        right: auto;
-    }
 }
 
 @media (max-width: 480px) {
@@ -742,8 +893,9 @@ body {
         font-size: 0.92rem;
     }
     
-    .auth-dropdown-content {
-        padding: 1rem;
+    .auth-modal {
+        padding: 1.25rem;
+        border-radius: 14px;
     }
     
     .input-group input {
@@ -800,8 +952,8 @@ body {
     }
 }
 
-/* Prevent body scroll when mobile menu is open */
-body.menu-open {
+/* Prevent body scroll when modal is open */
+body.modal-open {
     overflow: hidden;
     position: fixed;
     width: 100%;
@@ -873,17 +1025,30 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Auth dropdown functionality
+    // Check if we're on mobile
+    const isMobile = () => window.innerWidth <= 768;
+
+    // Auth toggle and dropdown (Desktop)
     const authToggle = document.getElementById('authToggle');
     const authDropdown = document.getElementById('authDropdown');
-    const toggleIndicator = document.getElementById('toggleIndicator');
+    const authModalOverlay = document.getElementById('authModalOverlay');
+    const modalClose = document.getElementById('modalClose');
 
-    // Login type toggle functionality
+    // Desktop login type toggle
     const userToggle = document.getElementById('userToggle');
     const adminToggle = document.getElementById('adminToggle');
     const userForm = document.getElementById('userForm');
     const adminForm = document.getElementById('adminForm');
+    const toggleIndicator = document.getElementById('toggleIndicator');
 
+    // Mobile login type toggle
+    const userToggleMobile = document.getElementById('userToggleMobile');
+    const adminToggleMobile = document.getElementById('adminToggleMobile');
+    const userFormMobile = document.getElementById('userFormMobile');
+    const adminFormMobile = document.getElementById('adminFormMobile');
+    const toggleIndicatorMobile = document.getElementById('toggleIndicatorMobile');
+
+    // Desktop toggle functionality
     if (userToggle && adminToggle && userForm && adminForm && toggleIndicator) {
         userToggle.onclick = function() {
             userToggle.classList.add('active');
@@ -902,21 +1067,72 @@ document.addEventListener('DOMContentLoaded', function () {
         };
     }
 
-    if (authToggle && authDropdown) {
+    // Mobile toggle functionality
+    if (userToggleMobile && adminToggleMobile && userFormMobile && adminFormMobile && toggleIndicatorMobile) {
+        userToggleMobile.onclick = function() {
+            userToggleMobile.classList.add('active');
+            adminToggleMobile.classList.remove('active');
+            userFormMobile.style.display = 'flex';
+            adminFormMobile.style.display = 'none';
+            toggleIndicatorMobile.classList.remove('admin');
+        };
+
+        adminToggleMobile.onclick = function() {
+            adminToggleMobile.classList.add('active');
+            userToggleMobile.classList.remove('active');
+            adminFormMobile.style.display = 'flex';
+            userFormMobile.style.display = 'none';
+            toggleIndicatorMobile.classList.add('admin');
+        };
+    }
+
+    // Auth button click handler
+    if (authToggle) {
         authToggle.onclick = function (event) {
             event.preventDefault();
-            authDropdown.classList.toggle('show');
-            this.classList.toggle('active');
+            event.stopPropagation();
 
-            if (authDropdown.classList.contains('show')) {
-                const isUserMode = userToggle?.classList.contains('active');
-                const emailInput = document.getElementById(isUserMode ? 'user-email' : 'admin-email');
-                if (emailInput) {
-                    setTimeout(() => emailInput.focus(), 100);
+            if (isMobile()) {
+                // Show modal on mobile
+                authModalOverlay.classList.add('show');
+                document.body.classList.add('modal-open');
+                
+                // Focus first input
+                setTimeout(() => {
+                    const firstInput = document.getElementById('user-email-mobile');
+                    if (firstInput) firstInput.focus();
+                }, 100);
+            } else {
+                // Show dropdown on desktop
+                authDropdown.classList.toggle('show');
+                this.classList.toggle('active');
+
+                if (authDropdown.classList.contains('show')) {
+                    const isUserMode = userToggle?.classList.contains('active');
+                    const emailInput = document.getElementById(isUserMode ? 'user-email' : 'admin-email');
+                    if (emailInput) {
+                        setTimeout(() => emailInput.focus(), 100);
+                    }
                 }
             }
+        };
+    }
 
-            event.stopPropagation();
+    // Modal close button
+    if (modalClose) {
+        modalClose.onclick = function() {
+            authModalOverlay.classList.remove('show');
+            document.body.classList.remove('modal-open');
+        };
+    }
+
+    // Close modal when clicking overlay
+    if (authModalOverlay) {
+        authModalOverlay.onclick = function(event) {
+            if (event.target === authModalOverlay) {
+                authModalOverlay.classList.remove('show');
+                document.body.classList.remove('modal-open');
+            }
         };
     }
 
@@ -940,7 +1156,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const mobileNavLinks = navLinksContainer.querySelectorAll('a:not(.create-account)');
         mobileNavLinks.forEach(link => {
             link.addEventListener('click', () => {
-                if (window.innerWidth <= 768) {
+                if (isMobile()) {
                     mobileMenuToggle.classList.remove('active');
                     navLinksContainer.classList.remove('active');
                     document.body.classList.remove('menu-open');
@@ -951,7 +1167,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Close dropdowns when clicking outside
     window.onclick = function (event) {
-        if (authToggle && authDropdown && !authToggle.contains(event.target) && !authDropdown.contains(event.target)) {
+        if (!isMobile() && authToggle && authDropdown && 
+            !authToggle.contains(event.target) && !authDropdown.contains(event.target)) {
             authDropdown.classList.remove('show');
             authToggle.classList.remove('active');
         }
@@ -965,7 +1182,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     };
 
-    // Enhanced navbar scroll effect with throttle
+    // Enhanced navbar scroll effect
     let scrollTimeout;
     let lastScrollTop = 0;
     
@@ -995,15 +1212,20 @@ document.addEventListener('DOMContentLoaded', function () {
         clearTimeout(resizeTimeout);
         resizeTimeout = setTimeout(function() {
             // Close mobile menu on resize to larger screen
-            if (window.innerWidth > 768) {
+            if (!isMobile()) {
                 if (navLinksContainer?.classList.contains('active')) {
                     navLinksContainer.classList.remove('active');
                     mobileMenuToggle?.classList.remove('active');
                     document.body.classList.remove('menu-open');
                 }
+                // Close modal if open
+                if (authModalOverlay?.classList.contains('show')) {
+                    authModalOverlay.classList.remove('show');
+                    document.body.classList.remove('modal-open');
+                }
             }
             
-            // Reposition auth dropdown if open
+            // Close desktop dropdown
             if (authDropdown?.classList.contains('show')) {
                 authDropdown.classList.remove('show');
                 authToggle?.classList.remove('active');
@@ -1011,12 +1233,17 @@ document.addEventListener('DOMContentLoaded', function () {
         }, 250);
     });
 
-    // Handle orientation change on mobile
+    // Handle orientation change
     window.addEventListener('orientationchange', function() {
         setTimeout(function() {
             if (authDropdown?.classList.contains('show')) {
                 authDropdown.classList.remove('show');
                 authToggle?.classList.remove('active');
+            }
+            
+            if (authModalOverlay?.classList.contains('show')) {
+                authModalOverlay.classList.remove('show');
+                document.body.classList.remove('modal-open');
             }
             
             if (navLinksContainer?.classList.contains('active')) {
@@ -1027,13 +1254,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }, 100);
     });
 
-    // Prevent dropdown from closing when clicking inside
-    if (authDropdown) {
-        authDropdown.addEventListener('click', function(event) {
-            event.stopPropagation();
-        });
-    }
-
     // Enhanced keyboard navigation
     document.addEventListener('keydown', function(event) {
         if (event.key === 'Escape') {
@@ -1041,6 +1261,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 authDropdown.classList.remove('show');
                 authToggle?.classList.remove('active');
                 authToggle?.focus();
+            }
+            
+            if (authModalOverlay?.classList.contains('show')) {
+                authModalOverlay.classList.remove('show');
+                document.body.classList.remove('modal-open');
             }
             
             if (navLinksContainer?.classList.contains('active')) {
