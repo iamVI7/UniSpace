@@ -1,0 +1,237 @@
+<style>
+    /* Footer Styles */
+    footer {
+        background-color: var(--dark);
+        padding: 3rem 5% 2rem;
+        color: white;
+        position: relative;
+        margin: 20px 20px 20px 20px;
+        border-radius: 20px;
+    }
+
+    .footer-container {
+        max-width: 600px;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    .footer-email {
+        font-size: 2rem;
+        font-weight: 600;
+        color: var(--primary);
+        margin-bottom: 3rem;
+        font-family: 'Space Grotesk', sans-serif;
+        text-decoration: none;
+        transition: var(--transition);
+    }
+
+    .footer-email:hover {
+        color: var(--secondary);
+        transform: translateY(-2px);
+    }
+
+    .footer-description {
+        color: rgba(255, 255, 255, 0.8);
+         padding-top: 1rem; /* Added padding to push text down */
+        font-size: 1rem;
+        line-height: 1.7;
+        margin-bottom: 2rem;
+        max-width: 500px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .footer-nav {
+        display: flex;
+        justify-content: center;
+        gap: 3rem;
+        margin-bottom: 2rem;
+        flex-wrap: wrap;
+    }
+
+    .footer-nav-link {
+        color: white;
+        text-decoration: none;
+        font-size: 1.1rem;
+        font-weight: 500;
+        font-family: 'Space Grotesk', sans-serif;
+        transition: var(--transition);
+    }
+
+    .footer-nav-link:hover {
+        color: var(--primary);
+        transform: translateY(-2px);
+    }
+
+    .footer-social-links {
+        display: flex;
+        justify-content: center;
+        gap: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .footer-social-link {
+        width: 45px;
+        height: 45px;
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.2rem;
+        text-decoration: none;
+        transition: var(--transition);
+    }
+
+    .footer-social-link:hover {
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        transform: translateY(-2px);
+    }
+
+    .footer-contact-section {
+        text-align: right;
+    }
+
+    .footer-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+        color: white;
+        font-family: 'Space Grotesk', sans-serif;
+    }
+
+    .footer-contact-item {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        margin-bottom: 1rem;
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 0.95rem;
+    }
+
+    .footer-contact-item i {
+        color: var(--primary);
+        margin-left: 0.8rem;
+        min-width: 20px;
+        text-align: center;
+        font-size: 1.1rem;
+    }
+
+    .footer-copyright {
+        text-align: center;
+        margin-top: 3rem;
+        padding-top: 2rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        color: rgba(255, 255, 255, 0.6);
+        font-size: 0.85rem;
+    }
+
+    /* Back to Top Button Styles */
+    .back-to-top {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        width: 50px;
+        height: 50px;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        cursor: pointer;
+        opacity: 0;
+        visibility: hidden;
+        transition: var(--transition);
+        z-index: 99;
+        box-shadow: var(--shadow);
+        border: none;
+    }
+
+    .back-to-top.visible {
+        opacity: 0.9;
+        visibility: visible;
+    }
+
+    .back-to-top:hover {
+        transform: translateY(-2px);
+        opacity: 1;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .footer-email {
+            font-size: 1.5rem;
+        }
+
+        .footer-nav {
+            gap: 2rem;
+        }
+
+        .footer-nav-link {
+            font-size: 1rem;
+        }
+
+        .footer-social-links {
+            gap: 1rem;
+        }
+
+        .footer-social-link {
+            width: 40px;
+            height: 40px;
+            font-size: 1.1rem;
+        }
+    }
+</style>
+
+<footer>
+    <div class="footer-container">
+        <a href="mailto:inducer41@gmail.com" class="footer-email">inducer41@gmail.com</a>
+        <div class="footer-description">
+            <p>Crafting seamless digital experiences that merge innovation, functionality, and user-centric
+                solutions — ensuring intuitive engagement, and lasting impact in a dynamic digital world.
+            </p>
+        </div>
+        <nav class="footer-nav">
+            <a href="/" class="footer-nav-link">Home</a>
+            <a href="About" class="footer-nav-link">About</a>
+            <a href="Blog" class="footer-nav-link">Blogs</a>
+        </nav>
+        <div class="footer-social-links">
+            <a href="https://www.linkedin.com/in/vishal-yadav-v7" class="footer-social-link"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#" class="footer-social-link"><i class="fab fa-github"></i></a>
+            <a href="#" class="footer-social-link"><i class="fab fa-instagram"></i></a>
+        </div>
+    </div>
+    <div class="footer-copyright">
+        <p>&copy; 2025 Vishal Yadav. All rights reserved.</p>
+        <p>Crafted with ❤️ and lots of ☕</p>
+    </div>
+</footer>
+
+<!-- Back to Top Button -->
+<button class="back-to-top" id="backToTop">
+    <i class="fas fa-arrow-up"></i>
+</button>
+
+<script>
+    // Back to top button functionality
+    const backToTopButton = document.getElementById('backToTop');
+
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+            backToTopButton.classList.add('visible');
+        } else {
+            backToTopButton.classList.remove('visible');
+        }
+    });
+
+    backToTopButton.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+</script>

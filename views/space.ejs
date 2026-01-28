@@ -1,0 +1,2127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="headlogo.png" type="image/png">
+    <title>Space</title>
+    <!-- Google Fonts and Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #10b981;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --light-gray: #e2e8f0;
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --glass-effect: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.3);
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --shadow-xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --danger: #ef4444;
+            --danger-dark: #dc2626;
+            --danger-light: #fee2e2;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #f1f5f9;
+            color: var(--dark);
+            overflow-x: hidden;
+            font-family: 'Inter', sans-serif;
+            position: relative;
+            line-height: 1.6;
+        }
+
+        /* Animated gradient background */
+        .background-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            overflow: hidden;
+        }
+
+        .gradient-bg {
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 70% 30%, rgba(99, 102, 241, 0.2) 0%, transparent 40%),
+                radial-gradient(circle at 30% 70%, rgba(16, 185, 129, 0.2) 0%, transparent 40%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Glassmorphism effect */
+        .glass-card {
+            background: var(--glass-effect);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 16px;
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--shadow-lg);
+            transition: var(--transition);
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 2rem 3%;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Profile section */
+        .profile-section {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 2.5rem;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+
+        .profile-picture-container {
+            position: relative;
+            width: 220px;
+            height: 220px;
+            flex-shrink: 0;
+        }
+
+        .profile-picture {
+            width: 100%;
+            height: 100%;
+            border-radius: 16px;
+            object-fit: cover;
+            border: 5px solid var(--glass-effect);
+            box-shadow: var(--shadow-lg);
+            transition: var(--transition);
+        }
+
+        .update-profile-btn {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            cursor: pointer;
+            border: none;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .update-profile-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .user-avatar {
+            width: 100%;
+            height: 100%;
+            border-radius: 16px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 5rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            border: 5px solid var(--glass-effect);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Welcome card */
+        .welcome-card {
+            flex: 1;
+            min-width: 300px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 27px;
+        }
+
+        .welcome-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--dark);
+            margin: 0;
+            line-height: 1.3;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .username {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+        }
+
+        .welcome-subtitle {
+            font-size: 1rem;
+            color: var(--gray);
+            margin: 0;
+            font-weight: 500;
+        }
+
+        .welcome-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: auto;
+            flex-wrap: wrap;
+        }
+
+        .header-btn {
+            padding: 0.7rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            position: relative;
+            top: 0;
+            box-shadow: 0 4px 0 rgba(79, 70, 229, 0.5);
+        }
+
+        .header-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 0 rgba(79, 70, 229, 0.5);
+        }
+
+        .header-btn:active {
+            top: 3px;
+            box-shadow: 0 1px 0 rgba(79, 70, 229, 0.5);
+        }
+
+        .danger-btn {
+            background: linear-gradient(135deg, var(--danger), var(--danger-dark));
+            box-shadow: 0 4px 0 rgba(220, 38, 38, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .danger-btn:hover {
+            box-shadow: 0 6px 0 rgba(220, 38, 38, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .danger-btn:active {
+            box-shadow: 0 1px 0 rgba(220, 38, 38, 0.5);
+            top: 3px;
+        }
+
+        /* Section titles */
+        .section-title {
+            font-size: clamp(1.75rem, 3vw, 2.5rem);
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            color: var(--dark);
+            display: inline-block;
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .section-title i {
+            margin-right: 12px;
+            color: var(--primary);
+        }
+
+        /* Records Cards Section */
+        .info-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .info-card {
+            padding: 2rem;
+            border-radius: 16px;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(16, 185, 129, 0.1));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+
+        .personal-icon {
+            background: linear-gradient(135deg, var(--primary), rgba(99, 102, 241, 0.7));
+            color: white;
+        }
+
+        .contact-icon {
+            background: linear-gradient(135deg, var(--secondary), rgba(16, 185, 129, 0.7));
+            color: white;
+        }
+
+        .security-icon {
+            background: linear-gradient(135deg, #f59e0b, rgba(245, 158, 11, 0.7));
+            color: white;
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--dark);
+            font-family: 'Space Grotesk', sans-serif;
+            margin: 0;
+        }
+
+        .card-content {
+            flex-grow: 1;
+        }
+
+        .record-detail {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .record-detail:last-child {
+            border-bottom: none;
+        }
+
+        .record-detail strong {
+            color: var(--gray);
+            font-weight: 600;
+            min-width: 100px;
+        }
+
+        .record-detail span {
+            color: var(--dark);
+            font-weight: 500;
+            text-align: right;
+        }
+
+        /* PDF Section */
+        .pdf-section {
+            margin: 3rem 0;
+        }
+
+        .pdf-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .pdf-card {
+            padding: 1.5rem;
+            border-radius: 12px;
+            transition: var(--transition);
+        }
+
+        .pdf-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .pdf-icon {
+            font-size: 2.5rem;
+            color: var(--danger);
+            margin-bottom: 1rem;
+        }
+
+        .pdf-name {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .pdf-date,
+        .pdf-size {
+            font-size: 0.85rem;
+            color: var(--gray);
+            margin-bottom: 0.5rem;
+        }
+
+        .pdf-actions {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        .pdf-btn {
+            flex: 1;
+            padding: 0.5rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .view-btn {
+            background-color: rgba(99, 102, 241, 0.1);
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .view-btn:hover {
+            background-color: rgba(99, 102, 241, 0.2);
+        }
+
+        .download-btn {
+            background-color: rgba(16, 185, 129, 0.1);
+            color: var(--secondary);
+            text-decoration: none;
+        }
+
+        .download-btn:hover {
+            background-color: rgba(16, 185, 129, 0.2);
+        }
+
+        .delete-btn {
+            background-color: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+        }
+
+        .delete-btn:hover {
+            background-color: rgba(239, 68, 68, 0.2);
+        }
+
+        .no-pdfs {
+            text-align: center;
+            padding: 3rem;
+            border: 2px dashed var(--light-gray);
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 16px;
+        }
+
+        .no-pdfs i {
+            font-size: 3rem;
+            color: var(--gray);
+            margin-bottom: 1rem;
+            opacity: 0.7;
+        }
+
+        .no-pdfs p {
+            color: var(--gray);
+            font-size: 1.1rem;
+        }
+
+        /* Add PDF Button */
+        .add-pdf-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            min-height: 200px;
+            cursor: pointer;
+            border: 2px dashed var(--light-gray);
+            border-radius: 12px;
+            background-color: rgba(255, 255, 255, 0.5);
+            transition: var(--transition);
+        }
+
+        .add-pdf-btn:hover {
+            border-color: var(--primary);
+            background-color: rgba(99, 102, 241, 0.05);
+        }
+
+        .add-pdf-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(16, 185, 129, 0.1));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            transition: var(--transition);
+        }
+
+        .add-pdf-btn:hover .add-pdf-icon {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(16, 185, 129, 0.2));
+            transform: scale(1.1);
+        }
+
+        .add-pdf-text {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        /* Image Masonry Grid Styles */
+        .image-masonry-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .image-card {
+            display: flex;
+            flex-direction: column;
+            border-radius: 12px;
+            overflow: hidden;
+            height: fit-content;
+            transition: var(--transition);
+        }
+
+        .image-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .image-preview {
+            width: 100%;
+            height: 180px;
+            overflow: hidden;
+            position: relative;
+            border-radius: 12px 12px 0 0;
+            background-color: #f1f5f9;
+        }
+
+        .image-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .image-card:hover .image-preview img {
+            transform: scale(1.05);
+        }
+
+        .image-details {
+            padding: 1rem 1.2rem;
+        }
+
+        .image-name {
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .image-date,
+        .image-size {
+            font-size: 0.85rem;
+            color: var(--gray);
+            margin-bottom: 0.5rem;
+        }
+
+        .image-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            padding: 0 1.2rem 1.2rem;
+        }
+
+        .image-actions .pdf-btn {
+            flex: 1;
+            min-width: 80px;
+        }
+
+        .no-images {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem;
+            text-align: center;
+            border: 2px dashed var(--light-gray);
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 16px;
+        }
+
+        .no-images i {
+            font-size: 3rem;
+            color: var(--gray);
+            margin-bottom: 1rem;
+            opacity: 0.7;
+        }
+
+        .no-images p {
+            color: var(--gray);
+            font-size: 1.1rem;
+        }
+
+        /* Add Image Button */
+        .add-image-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            min-height: 200px;
+            cursor: pointer;
+            border: 2px dashed var(--light-gray);
+            border-radius: 12px;
+            background-color: rgba(255, 255, 255, 0.5);
+            transition: var(--transition);
+        }
+
+        .add-image-btn:hover {
+            border-color: var(--primary);
+            background-color: rgba(99, 102, 241, 0.05);
+        }
+
+        .add-image-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(16, 185, 129, 0.1));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            transition: var(--transition);
+        }
+
+        .add-image-btn:hover .add-image-icon {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(16, 185, 129, 0.2));
+            transform: scale(1.1);
+        }
+
+        .add-image-text {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        /* Back to top button */
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            z-index: 99;
+            box-shadow: var(--shadow);
+            border: none;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-3px) scale(1.1);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .modal.show {
+            display: flex;
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: var(--glass-effect);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 16px;
+            border: 1px solid var(--glass-border);
+            width: 90%;
+            max-width: 500px;
+            padding: 2rem;
+            box-shadow: var(--shadow-xl);
+            position: relative;
+            transform: translateY(20px);
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            opacity: 0;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal.show .modal-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--danger-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--danger);
+            margin-right: 1rem;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--dark);
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .modal-body {
+            margin-bottom: 2rem;
+            color: var(--gray);
+            font-size: 1.1rem;
+            line-height: 1.6;
+            transition: var(--transition);
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            transition: var(--transition);
+        }
+
+        .modal-btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .cancel-btn {
+            background-color: var(--light-gray);
+            color: var(--gray);
+        }
+
+        .cancel-btn:hover {
+            background-color: #cbd5e1;
+        }
+
+        .confirm-btn {
+            background: linear-gradient(135deg, var(--danger), var(--danger-dark));
+            color: white;
+        }
+
+        .confirm-btn:hover {
+            box-shadow: 0 6px 10px rgba(239, 68, 68, 0.3);
+        }
+
+        /* Upload PDF Modal */
+        .upload-modal-content {
+            max-width: 500px;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark);
+            transition: var(--transition);
+        }
+
+        /* Enhanced file input styling */
+        .file-input-container {
+            position: relative;
+            width: 100%;
+            margin-bottom: 1rem;
+            transition: var(--transition);
+        }
+
+        .file-input-label {
+            display: block;
+            padding: 1.5rem;
+            border: 2px dashed var(--light-gray);
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .file-input-label:hover {
+            border-color: var(--primary);
+        }
+
+        .file-input-label.drag-over {
+            border-color: var(--secondary);
+        }
+
+        .file-input-text {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--gray);
+            transition: var(--transition);
+        }
+
+        .file-input-icon {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            transition: var(--transition);
+        }
+
+        .file-input-main-text {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            color: var(--dark);
+            transition: var(--transition);
+        }
+
+        .file-input-subtext {
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+            transition: var(--transition);
+        }
+
+        .file-input-btn {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border-radius: 6px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .file-input {
+            position: absolute;
+            width: 0.1px;
+            height: 0.1px;
+            opacity: 0;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .file-selected {
+            display: none;
+            margin-top: 1rem;
+            padding: 0.75rem;
+            background-color: rgba(16, 185, 129, 0.1);
+            border-radius: 8px;
+            color: var(--secondary);
+            font-weight: 500;
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .file-selected i {
+            margin-right: 0.5rem;
+        }
+
+        .upload-btn {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .upload-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .upload-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .status-message {
+            margin-top: 1rem;
+            padding: 0.75rem;
+            border-radius: 8px;
+            display: none;
+            transition: var(--transition);
+        }
+
+        /* Profile Picture Modal */
+        .profile-modal-content {
+            max-width: 400px;
+        }
+
+        .profile-preview {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 1.5rem;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            background: #f1f5f9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .profile-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .profile-preview .user-avatar {
+            width: 100%;
+            height: 100%;
+            border: none;
+            box-shadow: none;
+            font-size: 4.5rem;
+        }
+
+        /* Delete Animation */
+        .delete-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .delete-animation.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .delete-animation-icon {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--danger), var(--danger-dark));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .delete-animation-text {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
+            color: var(--danger-dark);
+            margin-bottom: 1rem;
+        }
+
+        .delete-animation-subtext {
+            color: var(--gray);
+            max-width: 400px;
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        /* Loader */
+        .loader-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #f1f5f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.7s ease, visibility 0.7s ease;
+        }
+
+        .loader {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .logo-container {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            box-shadow: var(--shadow-lg);
+            animation: pulse 1.5s infinite ease-in-out;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.1);
+                opacity: 0.7;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .loading-text {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+            color: var(--dark);
+            letter-spacing: 2px;
+            margin-top: 1rem;
+        }
+
+        .loading-bar {
+            width: 150px;
+            height: 4px;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            margin-top: 0.5rem;
+        }
+
+        .loading-progress {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            animation: loading 2s infinite ease-in-out;
+        }
+
+        @keyframes loading {
+            0% {
+                width: 0;
+            }
+            50% {
+                width: 100%;
+            }
+            100% {
+                width: 0;
+            }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .info-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .pdf-grid, .image-masonry-grid {
+                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            }
+
+            .welcome-title {
+                font-size: 1.1rem;
+            }
+
+            .welcome-subtitle {
+                font-size: 0.8rem;
+            }
+
+            .welcome-buttons {
+                flex-direction: column;
+            }
+
+            .header-btn {
+                margin-left: 0;
+                margin-top: 0.5rem;
+            }
+
+            .profile-section {
+                flex-direction: column;
+            }
+
+            .profile-picture-container {
+                margin: 0 auto;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .main-content {
+                padding: 1.5rem;
+            }
+
+            .modal-content {
+                padding: 1.5rem;
+            }
+
+            .modal-footer {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .modal-btn {
+                width: 100%;
+            }
+
+            .pdf-actions, .image-actions {
+                flex-direction: column;
+            }
+
+            .image-masonry-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Loader -->
+    <div class="loader-wrapper" id="loader">
+        <div class="loader">
+            <div class="logo-container">VI</div>
+            <div class="loading-text">LOADING</div>
+            <div class="loading-bar">
+                <div class="loading-progress"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Animation -->
+    <div class="delete-animation" id="deleteAnimation">
+        <div class="delete-animation-icon">
+            <i class="fas fa-trash-alt"></i>
+        </div>
+        <div class="delete-animation-text">Deleting Account</div>
+        <div class="delete-animation-subtext">Your account and all associated data are being permanently removed...</div>
+    </div>
+
+    <!-- Background gradient -->
+    <div class="background-wrapper">
+        <div class="gradient-bg"></div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Profile section -->
+        <div class="profile-section">
+            <div class="profile-picture-container glass-card">
+                <% if(user.profilePicture) { %>
+                    <img src="<%= user.profilePicture.url %>?v=<%= cacheBust %>" alt="Profile Picture"
+                        class="profile-picture" onerror="this.onerror=null;this.src='/public/default-profile.jpg'">
+                    <% } else { %>
+                        <div class="user-avatar">
+                            <%= user.name.charAt(0).toUpperCase() %>
+                        </div>
+                        <% } %>
+                            <button class="update-profile-btn" onclick="openProfileModal()">
+                                <i class="fas fa-plus"></i>
+                            </button>
+            </div>
+
+            <div class="welcome-card glass-card">
+                <div>
+                    <h1 class="welcome-title">
+                        Hello, <span class="username">
+                            <%= user.name %>
+                        </span> 😊
+                    </h1>
+                    <p class="welcome-subtitle">Welcome to your space !</p>
+                </div>
+                <div class="welcome-buttons">
+                    <a href="/logout"><button class="header-btn"><i class="fas fa-sign-out-alt"></i> Log Out</button></a>
+                    <button class="header-btn danger-btn" onclick="openDeleteModal()">
+                        <i class="fas fa-trash-alt"></i> Delete Account
+                    </button>
+                </div>
+                <form id="deleteForm" action="/delete/<%= user._id %>" method="POST" style="display: none;"></form>
+            </div>
+        </div>
+
+        <!-- Records Cards Section -->
+        <h2 class="section-title"><i class="fas fa-user-circle"></i>My Profile</h2>
+        <div class="info-cards">
+            <div class="info-card glass-card">
+                <div class="card-header">
+                    <div class="card-icon personal-icon">
+                        <i class="fas fa-user-alt"></i>
+                    </div>
+                    <h3 class="card-title">Personal Details</h3>
+                </div>
+                <div class="card-content">
+                    <div class="record-detail">
+                        <strong>Name</strong>
+                        <span>
+                            <%= user.name %>
+                        </span>
+                    </div>
+
+                    <div class="record-detail">
+                        <strong>Profession</strong>
+                        <span>
+                            <%= user.profession %>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-card glass-card">
+                <div class="card-header">
+                    <div class="card-icon contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h3 class="card-title">Contact Information</h3>
+                </div>
+                <div class="card-content">
+                    <div class="record-detail">
+                        <strong>Email</strong>
+                        <span>
+                            <%= user.email %>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-card glass-card">
+                <div class="card-header">
+                    <div class="card-icon security-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="card-title">Account Security</h3>
+                </div>
+                <div class="card-content">
+                    <div class="record-detail">
+                        <strong>Password</strong>
+                        <span>
+                            <%= user.pass %>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PDF List Section -->
+        <div class="pdf-section">
+            <h2 class="section-title"><i class="fas fa-file-pdf"></i> Document Vault</h2>
+
+            <div class="pdf-grid">
+                <% if (user.pdfs && user.pdfs.length> 0) { %>
+                    <% user.pdfs.forEach(pdf=> { %>
+                        <div class="pdf-card glass-card">
+                            <div class="pdf-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <div class="pdf-details">
+                                <h3 class="pdf-name">
+                                    <%= pdf.name %>
+                                </h3>
+                                <p class="pdf-date">Uploaded: <%= new Date(pdf.uploadDate).toLocaleDateString() %>
+                                </p>
+                                <p class="pdf-size">
+                                    <%= (pdf.size / 1024).toFixed(2) %> KB
+                                </p>
+                            </div>
+                            <div class="pdf-actions">
+                                <a href="/pdfs/<%= pdf.filename %>" target="_blank" class="pdf-btn view-btn">
+                                    <i class="fas fa-eye"></i> View
+                                </a>
+                                <a href="/pdfs/download/<%= pdf.filename %>" class="pdf-btn download-btn">
+                                    <i class="fas fa-download"></i> Keep
+                                </a>
+                                <button class="pdf-btn delete-btn"
+                                    onclick="openDeletePdfModal('<%= pdf.filename %>', '<%= pdf.name %>')">
+                                    <i class="fas fa-trash-alt"></i> Delete
+                                </button>
+                            </div>
+                        </div>
+                        <% }); %>
+                            <% } else { %>
+                                <div class="no-pdfs glass-card">
+                                    <i class="fas fa-file-pdf"></i>
+                                    <p>No PDFs uploaded yet</p>
+                                </div>
+                                <% } %>
+
+                                    <!-- Add PDF Button -->
+                                    <div class="add-pdf-btn glass-card" onclick="openUploadModal()">
+                                        <div class="add-pdf-icon">
+                                            <i class="fas fa-plus"></i>
+                                        </div>
+                                        <div class="add-pdf-text">Add PDF</div>
+                                    </div>
+            </div>
+        </div>
+
+        <!-- Images List Section -->
+        <div class="pdf-section">
+            <h2 class="section-title"><i class="fas fa-image"></i> Images</h2>
+
+            <div class="image-masonry-grid">
+                <% if (user.images && user.images.length> 0) { %>
+                    <% user.images.forEach(image=> { %>
+                        <div class="image-card glass-card">
+                            <div class="image-preview">
+                                <img src="/images/<%= image.filename %>" alt="<%= image.name %>" loading="lazy">
+                            </div>
+                            <div class="image-details">
+                                <h3 class="image-name">
+                                    <%= image.name %>
+                                </h3>
+                                <p class="image-date">Uploaded: <%= new Date(image.uploadDate).toLocaleDateString() %>
+                                </p>
+                                <p class="image-size">
+                                    <%= (image.size / 1024).toFixed(2) %> KB
+                                </p>
+                            </div>
+                            <div class="image-actions">
+                                <a href="/images/<%= image.filename %>" target="_blank" class="pdf-btn view-btn">
+                                    <i class="fas fa-eye"></i> View
+                                </a>
+                                <a href="/images/<%= image.filename %>" download="<%= image.name %>"
+                                    class="pdf-btn download-btn">
+                                    <i class="fas fa-download"></i> Keep
+                                </a>
+                                <button class="pdf-btn delete-btn"
+                                    onclick="openDeleteImageModal('<%= image.filename %>', '<%= image.name %>')">
+                                    <i class="fas fa-trash-alt"></i> Delete
+                                </button>
+                            </div>
+                        </div>
+                        <% }); %>
+                            <% } else { %>
+                                <div class="no-images glass-card">
+                                    <i class="fas fa-image"></i>
+                                    <p>No images uploaded yet</p>
+                                </div>
+                                <% } %>
+
+                                    <!-- Add Image Button -->
+                                    <div class="add-image-btn glass-card" onclick="openUploadImageModal()">
+                                        <div class="add-image-icon">
+                                            <i class="fas fa-plus"></i>
+                                        </div>
+                                        <div class="add-image-text">Add Image</div>
+                                    </div>
+            </div>
+        </div>
+
+        <!-- Upload PDF Modal -->
+        <div id="uploadModal" class="modal">
+            <div class="modal-content upload-modal-content">
+                <div class="modal-header">
+                    <div class="modal-icon" style="background: rgba(99, 102, 241, 0.1); color: var(--primary);">
+                        <i class="fas fa-file-upload"></i>
+                    </div>
+                    <h3 class="modal-title">Upload PDF</h3>
+                </div>
+                <div class="modal-body">
+                    <form id="pdfUploadForm" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <div class="file-input-container">
+                                <label for="pdfFile" class="file-input-label" id="pdfFileLabel">
+                                    <div class="file-input-text">
+                                        <i class="fas fa-cloud-upload-alt file-input-icon"></i>
+                                        <div class="file-input-main-text">Upload PDF File</div>
+                                        <div class="file-input-subtext">Drag & drop your file here or click to browse</div>
+                                        <div class="file-input-btn">Select File</div>
+                                    </div>
+                                </label>
+                                <input type="file" id="pdfFile" name="pdf" accept=".pdf" class="file-input" required>
+                                <div class="file-selected" id="pdfFileSelected">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span id="pdfFileName">No file selected</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="upload-btn" id="pdfUploadBtn" disabled>
+                                <i class="fas fa-cloud-upload-alt"></i> Upload PDF
+                            </button>
+                        </div>
+                        <div id="uploadStatus" class="status-message"></div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="modal-btn cancel-btn" onclick="closeUploadModal()">Close</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Upload Image Modal -->
+        <div id="uploadImageModal" class="modal">
+            <div class="modal-content upload-modal-content">
+                <div class="modal-header">
+                    <div class="modal-icon" style="background: rgba(99, 102, 241, 0.1); color: var(--primary);">
+                        <i class="fas fa-image"></i>
+                    </div>
+                    <h3 class="modal-title">Upload Image</h3>
+                </div>
+                <div class="modal-body">
+                    <form id="imageUploadForm" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <div class="file-input-container">
+                                <label for="imageFile" class="file-input-label" id="imageFileLabel">
+                                    <div class="file-input-text">
+                                        <i class="fas fa-cloud-upload-alt file-input-icon"></i>
+                                        <div class="file-input-main-text">Upload Image</div>
+                                        <div class="file-input-subtext">Drag & drop your image here or click to browse</div>
+                                        <div class="file-input-btn">Select Image</div>
+                                    </div>
+                                </label>
+                                <input type="file" id="imageFile" name="image" accept="image/*" class="file-input" required>
+                                <div class="file-selected" id="imageFileSelected">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span id="imageFileName">No file selected</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="upload-btn" id="imageUploadBtn" disabled>
+                                <i class="fas fa-cloud-upload-alt"></i> Upload Image
+                            </button>
+                        </div>
+                        <div id="imageUploadStatus" class="status-message"></div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="modal-btn cancel-btn" onclick="closeUploadImageModal()">Close</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Delete Image Modal -->
+        <div id="deleteImageModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-icon" style="background: rgba(239, 68, 68, 0.1); color: var(--danger);">
+                        <i class="fas fa-trash-alt"></i>
+                    </div>
+                    <h3 class="modal-title">Delete Image ?</h3>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete <strong id="imageToDeleteName"></strong> ?</p>
+                    <p>This action cannot be undone.</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="modal-btn cancel-btn" onclick="closeDeleteImageModal()">Cancel</button>
+                    <button class="modal-btn confirm-btn" onclick="confirmDeleteImage()">Delete</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Delete PDF Modal -->
+        <div id="deletePdfModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-icon" style="background: rgba(239, 68, 68, 0.1); color: var(--danger);">
+                        <i class="fas fa-trash-alt"></i>
+                    </div>
+                    <h3 class="modal-title">Delete PDF ?</h3>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete <strong id="pdfToDeleteName"></strong> ?</p>
+                    <p>This action cannot be undone.</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="modal-btn cancel-btn" onclick="closeDeletePdfModal()">Cancel</button>
+                    <button class="modal-btn confirm-btn" onclick="confirmDeletePdf()">Delete</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Profile Picture Upload Modal -->
+        <div id="profileModal" class="modal">
+            <div class="modal-content profile-modal-content">
+                <div class="modal-header">
+                    <div class="modal-icon" style="background: rgba(99, 102, 241, 0.1); color: var(--primary);">
+                        <i class="fas fa-user-edit"></i>
+                    </div>
+                    <h3 class="modal-title">Update Profile Picture</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="profile-preview" id="profilePreview">
+                        <% if(user.profilePicture) { %>
+                            <img src="<%= user.profilePicture.url %>?v=<%= cacheBust %>" alt="Profile Preview">
+                            <% } else { %>
+                                <div class="user-avatar">
+                                    <%= user.name.charAt(0).toUpperCase() %>
+                                </div>
+                                <% } %>
+                    </div>
+                    <form id="profileUploadForm" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <div class="file-input-container">
+                                <label for="profileFile" class="file-input-label" id="profileFileLabel">
+                                    <div class="file-input-text">
+                                        <i class="fas fa-camera file-input-icon"></i>
+                                        <div class="file-input-main-text">Select Profile Image</div>
+                                        <div class="file-input-subtext">JPG, PNG up to 5MB</div>
+                                        <div class="file-input-btn">Browse Files</div>
+                                    </div>
+                                </label>
+                                <input type="file" id="profileFile" name="profile" accept="image/*" class="file-input" required>
+                                <div class="file-selected" id="profileFileSelected">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span id="profileFileName">No file selected</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="profileUploadStatus" class="status-message"></div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="modal-btn cancel-btn" onclick="closeProfileModal()">Cancel</button>
+                    <button class="modal-btn confirm-btn" onclick="uploadProfilePicture()" id="uploadProfileBtn" disabled>
+                        <i class="fas fa-check"></i> Update
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Delete Account Modal -->
+        <div id="deleteModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <h3 class="modal-title">Delete Account ?</h3>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete your account?<br> This action cannot be undone and all your data will
+                        be permanently lost.</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="modal-btn cancel-btn" onclick="closeDeleteModal()">Cancel</button>
+                    <button class="modal-btn confirm-btn" onclick="confirmDeleteAccount()">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        // Back to top button functionality
+        const backToTopButton = document.getElementById('backToTop');
+
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.add('visible');
+            } else {
+                backToTopButton.classList.remove('visible');
+            }
+        });
+
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Delete account modal functionality
+        const deleteModal = document.getElementById('deleteModal');
+        const deleteAnimation = document.getElementById('deleteAnimation');
+
+        function openDeleteModal() {
+            deleteModal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeDeleteModal() {
+            deleteModal.classList.remove('show');
+            document.body.style.overflow = '';
+        }
+
+        function confirmDeleteAccount() {
+            deleteModal.classList.remove('show');
+            deleteAnimation.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            setTimeout(() => {
+                document.getElementById('deleteForm').submit();
+            }, 2000);
+        }
+
+        // Upload PDF modal functionality
+        const uploadModal = document.getElementById('uploadModal');
+        const pdfFileInput = document.getElementById('pdfFile');
+        const pdfFileLabel = document.getElementById('pdfFileLabel');
+        const pdfFileSelected = document.getElementById('pdfFileSelected');
+        const pdfFileName = document.getElementById('pdfFileName');
+        const pdfUploadBtn = document.getElementById('pdfUploadBtn');
+
+        function openUploadModal() {
+            uploadModal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeUploadModal() {
+            uploadModal.classList.remove('show');
+            document.body.style.overflow = '';
+            document.getElementById('pdfUploadForm').reset();
+            document.getElementById('uploadStatus').textContent = '';
+            document.getElementById('uploadStatus').style.display = 'none';
+            pdfFileSelected.style.display = 'none';
+            pdfUploadBtn.disabled = true;
+            pdfFileLabel.classList.remove('drag-over');
+        }
+
+        // Handle PDF file selection
+        pdfFileInput.addEventListener('change', function(e) {
+            if (this.files.length > 0) {
+                const file = this.files[0];
+                pdfFileName.textContent = file.name;
+                pdfFileSelected.style.display = 'block';
+                pdfUploadBtn.disabled = false;
+            } else {
+                pdfFileSelected.style.display = 'none';
+                pdfUploadBtn.disabled = true;
+            }
+        });
+
+        // Drag and drop for PDF upload
+        pdfFileLabel.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            pdfFileLabel.classList.add('drag-over');
+        });
+
+        pdfFileLabel.addEventListener('dragleave', () => {
+            pdfFileLabel.classList.remove('drag-over');
+        });
+
+        pdfFileLabel.addEventListener('drop', (e) => {
+            e.preventDefault();
+            pdfFileLabel.classList.remove('drag-over');
+            if (e.dataTransfer.files.length) {
+                pdfFileInput.files = e.dataTransfer.files;
+                const event = new Event('change');
+                pdfFileInput.dispatchEvent(event);
+            }
+        });
+
+        // Close modals if user clicks outside of them
+        window.onclick = function (event) {
+            if (event.target === deleteModal) {
+                closeDeleteModal();
+            }
+            if (event.target === uploadModal) {
+                closeUploadModal();
+            }
+            if (event.target === document.getElementById('uploadImageModal')) {
+                closeUploadImageModal();
+            }
+            if (event.target === document.getElementById('deleteImageModal')) {
+                closeDeleteImageModal();
+            }
+            if (event.target === document.getElementById('profileModal')) {
+                closeProfileModal();
+            }
+            if (event.target === document.getElementById('deletePdfModal')) {
+                closeDeletePdfModal();
+            }
+        };
+
+        // Loader functionality
+        window.addEventListener('load', function () {
+            setTimeout(function () {
+                const loader = document.getElementById('loader');
+                loader.style.opacity = '0';
+                setTimeout(function () {
+                    loader.style.display = 'none';
+                }, 700);
+            }, 1500);
+        });
+
+        // PDF Upload Functionality
+        document.getElementById('pdfUploadForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const fileInput = document.getElementById('pdfFile');
+            const statusElement = document.getElementById('uploadStatus');
+
+            if (fileInput.files.length === 0) {
+                showStatusMessage(statusElement, 'Please select a PDF file', 'error');
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('pdf', fileInput.files[0]);
+
+            try {
+                showStatusMessage(statusElement, 'Uploading PDF...', 'info');
+                pdfUploadBtn.disabled = true;
+                pdfUploadBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading...';
+
+                const response = await fetch('/upload-pdf', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    showStatusMessage(statusElement, 'PDF uploaded successfully !', 'success');
+                    fileInput.value = '';
+                    setTimeout(() => location.reload(), 1000);
+                } else {
+                    showStatusMessage(statusElement, result.message || 'PDF upload failed', 'error');
+                    pdfUploadBtn.disabled = false;
+                    pdfUploadBtn.innerHTML = '<i class="fas fa-cloud-upload-alt"></i> Upload PDF';
+                }
+            } catch (error) {
+                console.error('Upload error:', error);
+                showStatusMessage(statusElement, 'An error occurred during upload', 'error');
+                pdfUploadBtn.disabled = false;
+                pdfUploadBtn.innerHTML = '<i class="fas fa-cloud-upload-alt"></i> Upload PDF';
+            }
+        });
+
+        // Function to show status messages
+        function showStatusMessage(element, message, type) {
+            element.textContent = message;
+            element.style.display = 'block';
+            
+            if (type === 'error') {
+                element.style.color = 'var(--danger)';
+                element.style.backgroundColor = 'var(--danger-light)';
+            } else if (type === 'success') {
+                element.style.color = 'var(--secondary)';
+                element.style.backgroundColor = 'rgba(16, 185, 129, 0.1)';
+            } else {
+                element.style.color = 'var(--dark)';
+                element.style.backgroundColor = 'var(--light-gray)';
+            }
+        }
+
+        // Function to open delete confirmation modal
+        function openDeletePdfModal(filename, pdfName) {
+            document.getElementById('pdfToDeleteName').textContent = pdfName;
+            document.getElementById('deletePdfModal').classList.add('show');
+            document.body.style.overflow = 'hidden';
+            document.getElementById('deletePdfModal').dataset.filename = filename;
+        }
+
+        // Function to close delete modal
+        function closeDeletePdfModal() {
+            document.getElementById('deletePdfModal').classList.remove('show');
+            document.body.style.overflow = '';
+        }
+
+        // Function to handle PDF deletion
+        async function confirmDeletePdf() {
+            const filename = document.getElementById('deletePdfModal').dataset.filename;
+            const userId = '<%= user._id %>';
+
+            try {
+                const response = await fetch(`/delete-pdf/${userId}/${filename}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    location.reload();
+                } else {
+                    alert(result.message || 'Failed to delete PDF');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred while deleting the PDF');
+            } finally {
+                closeDeletePdfModal();
+            }
+        }
+
+        // Image Modal Functions
+        const uploadImageModal = document.getElementById('uploadImageModal');
+        const imageFileInput = document.getElementById('imageFile');
+        const imageFileLabel = document.getElementById('imageFileLabel');
+        const imageFileSelected = document.getElementById('imageFileSelected');
+        const imageFileName = document.getElementById('imageFileName');
+        const imageUploadBtn = document.getElementById('imageUploadBtn');
+
+        function openUploadImageModal() {
+            uploadImageModal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeUploadImageModal() {
+            uploadImageModal.classList.remove('show');
+            document.body.style.overflow = '';
+            document.getElementById('imageUploadForm').reset();
+            document.getElementById('imageUploadStatus').textContent = '';
+            document.getElementById('imageUploadStatus').style.display = 'none';
+            imageFileSelected.style.display = 'none';
+            imageUploadBtn.disabled = true;
+            imageFileLabel.classList.remove('drag-over');
+        }
+
+        // Handle Image file selection
+        imageFileInput.addEventListener('change', function(e) {
+            if (this.files.length > 0) {
+                const file = this.files[0];
+                imageFileName.textContent = file.name;
+                imageFileSelected.style.display = 'block';
+                imageUploadBtn.disabled = false;
+            } else {
+                imageFileSelected.style.display = 'none';
+                imageUploadBtn.disabled = true;
+            }
+        });
+
+        // Drag and drop for Image upload
+        imageFileLabel.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            imageFileLabel.classList.add('drag-over');
+        });
+
+        imageFileLabel.addEventListener('dragleave', () => {
+            imageFileLabel.classList.remove('drag-over');
+        });
+
+        imageFileLabel.addEventListener('drop', (e) => {
+            e.preventDefault();
+            imageFileLabel.classList.remove('drag-over');
+            if (e.dataTransfer.files.length) {
+                imageFileInput.files = e.dataTransfer.files;
+                const event = new Event('change');
+                imageFileInput.dispatchEvent(event);
+            }
+        });
+
+        function openDeleteImageModal(filename, imageName) {
+            document.getElementById('imageToDeleteName').textContent = imageName;
+            document.getElementById('deleteImageModal').classList.add('show');
+            document.body.style.overflow = 'hidden';
+            document.getElementById('deleteImageModal').dataset.filename = filename;
+        }
+
+        function closeDeleteImageModal() {
+            document.getElementById('deleteImageModal').classList.remove('show');
+            document.body.style.overflow = '';
+        }
+
+        async function confirmDeleteImage() {
+            const filename = document.getElementById('deleteImageModal').dataset.filename;
+            const userId = '<%= user._id %>';
+
+            try {
+                const response = await fetch(`/delete-image/${userId}/${filename}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    location.reload();
+                } else {
+                    alert(result.message || 'Failed to delete image');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred while deleting the image');
+            } finally {
+                closeDeleteImageModal();
+            }
+        }
+
+        // Image Upload Functionality
+        document.getElementById('imageUploadForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const fileInput = document.getElementById('imageFile');
+            const statusElement = document.getElementById('imageUploadStatus');
+
+            if (fileInput.files.length === 0) {
+                showStatusMessage(statusElement, 'Please select an image file', 'error');
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('image', fileInput.files[0]);
+
+            try {
+                showStatusMessage(statusElement, 'Uploading image...', 'info');
+                imageUploadBtn.disabled = true;
+                imageUploadBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading...';
+
+                const response = await fetch('/upload-image', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    showStatusMessage(statusElement, 'Image uploaded successfully !', 'success');
+                    fileInput.value = '';
+                    setTimeout(() => location.reload(), 1000);
+                } else {
+                    showStatusMessage(statusElement, result.message || 'Image upload failed', 'error');
+                    imageUploadBtn.disabled = false;
+                    imageUploadBtn.innerHTML = '<i class="fas fa-cloud-upload-alt"></i> Upload Image';
+                }
+            } catch (error) {
+                console.error('Upload error:', error);
+                showStatusMessage(statusElement, 'An error occurred during upload', 'error');
+                imageUploadBtn.disabled = false;
+                imageUploadBtn.innerHTML = '<i class="fas fa-cloud-upload-alt"></i> Upload Image';
+            }
+        });
+
+        // Profile Picture Modal Functions
+        const profileModal = document.getElementById('profileModal');
+        const profileFileInput = document.getElementById('profileFile');
+        const profileFileLabel = document.getElementById('profileFileLabel');
+        const profileFileSelected = document.getElementById('profileFileSelected');
+        const profileFileName = document.getElementById('profileFileName');
+        const uploadProfileBtn = document.getElementById('uploadProfileBtn');
+
+        function openProfileModal() {
+            profileModal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+            profileFileInput.value = '';
+            document.getElementById('profileUploadStatus').textContent = '';
+            document.getElementById('profileUploadStatus').style.display = 'none';
+            uploadProfileBtn.disabled = true;
+            profileFileSelected.style.display = 'none';
+            profileFileLabel.classList.remove('drag-over');
+            
+            // Reset preview to current profile picture
+            const preview = document.getElementById('profilePreview');
+            preview.innerHTML = `<% if(user.profilePicture) { %>
+                <img src="<%= user.profilePicture.url %>?v=<%= cacheBust %>" alt="Profile Preview">
+                <% } else { %>
+                    <div class="user-avatar">
+                        <%= user.name.charAt(0).toUpperCase() %>
+                    </div>
+                    <% } %>`;
+        }
+
+        function closeProfileModal() {
+            profileModal.classList.remove('show');
+            document.body.style.overflow = '';
+        }
+
+        // Handle profile image selection
+        profileFileInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const preview = document.getElementById('profilePreview');
+            const statusElement = document.getElementById('profileUploadStatus');
+
+            if (!file.type.match('image.*')) {
+                showStatusMessage(statusElement, 'Please select an image file (JPEG, PNG, etc.)', 'error');
+                uploadProfileBtn.disabled = true;
+                profileFileSelected.style.display = 'none';
+                return;
+            }
+
+            if (file.size > 5 * 1024 * 1024) {
+                showStatusMessage(statusElement, 'Image size should be less than 5MB', 'error');
+                uploadProfileBtn.disabled = true;
+                profileFileSelected.style.display = 'none';
+                return;
+            }
+
+            profileFileName.textContent = file.name;
+            profileFileSelected.style.display = 'block';
+            uploadProfileBtn.disabled = false;
+            statusElement.style.display = 'none';
+
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                preview.innerHTML = `<img src="${e.target.result}" alt="Profile Preview">`;
+            };
+            reader.readAsDataURL(file);
+        });
+
+        // Drag and drop for Profile upload
+        profileFileLabel.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            profileFileLabel.classList.add('drag-over');
+        });
+
+        profileFileLabel.addEventListener('dragleave', () => {
+            profileFileLabel.classList.remove('drag-over');
+        });
+
+        profileFileLabel.addEventListener('drop', (e) => {
+            e.preventDefault();
+            profileFileLabel.classList.remove('drag-over');
+            if (e.dataTransfer.files.length) {
+                profileFileInput.files = e.dataTransfer.files;
+                const event = new Event('change');
+                profileFileInput.dispatchEvent(event);
+            }
+        });
+
+        // Upload profile picture
+        async function uploadProfilePicture() {
+            const fileInput = document.getElementById('profileFile');
+            const statusElement = document.getElementById('profileUploadStatus');
+
+            if (fileInput.files.length === 0) {
+                showStatusMessage(statusElement, 'Please select an image file', 'error');
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('profile', fileInput.files[0]);
+
+            try {
+                showStatusMessage(statusElement, 'Updating profile picture...', 'info');
+                uploadProfileBtn.disabled = true;
+                uploadProfileBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Updating...';
+
+                const response = await fetch('/upload-profile-picture', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    showStatusMessage(statusElement, 'Profile picture updated successfully !', 'success');
+                    setTimeout(() => location.reload(), 1000);
+                } else {
+                    showStatusMessage(statusElement, result.message || 'Failed to update profile picture', 'error');
+                    uploadProfileBtn.disabled = false;
+                    uploadProfileBtn.innerHTML = '<i class="fas fa-check"></i> Update';
+                }
+            } catch (error) {
+                console.error('Upload error:', error);
+                showStatusMessage(statusElement, 'An error occurred during upload', 'error');
+                uploadProfileBtn.disabled = false;
+                uploadProfileBtn.innerHTML = '<i class="fas fa-check"></i> Update';
+            }
+        }
+    </script>
+</body>
+</html>

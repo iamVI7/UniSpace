@@ -1,0 +1,1055 @@
+<!-- Enhanced navbar with minimal and subtle login -->
+<nav class="navbar" id="navbar">
+    <a href="/" class="logo">
+        <div class="logo-img">VI</div>
+        <div class="logo-text">
+            <span>Vishal</span>
+            <span>Yadav</span>
+        </div>
+    </a>
+    <div class="nav-links">
+        <a href="/" id="home-link">Home</a>
+        <a href="/About" id="about-link">About</a>
+        <a href="/Blog" id="blog-link">Blogs</a>
+        <a href="/Contact" id="contact-link">Contact</a>
+
+        <!-- Enhanced Space button with new icon -->
+        <div class="auth-dropdown">
+            <button class="auth-toggle" id="authToggle">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="space-svg">
+                    <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                    <path d="M2 17l10 5 10-5"/>
+                    <path d="M2 12l10 5 10-5"/>
+                </svg>
+                <span class="user-text">Space</span>
+            </button>
+            <div class="auth-dropdown-content" id="authDropdown">
+                <!-- Enhanced Login Type Toggle -->
+                <div class="login-type-toggle">
+                    <span class="toggle-indicator" id="toggleIndicator"></span>
+                    <button type="button" class="toggle-btn active" id="userToggle">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="toggle-icon">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                            <circle cx="12" cy="7" r="4"/>
+                        </svg>
+                        User
+                    </button>
+                    <button type="button" class="toggle-btn" id="adminToggle">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="toggle-icon">
+                            <path d="M12 15l8-5-8 5-8 5 8 5z"/>
+                            <path d="M12 15l8-5v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V10l8 5z"/>
+                        </svg>
+                        Admin
+                    </button>
+                </div>
+
+                <!-- Enhanced User Login Form -->
+                <form action="/login" method="post" class="auth-form" id="userForm">
+                    <div class="form-header">
+                        <h3>Welcome Back</h3>
+                        <p>Sign in to your space</p>
+                    </div>
+                    <div class="input-group">
+                        <input type="email" id="user-email" name="email" placeholder="Enter your email" required>
+                    </div>
+                    <div class="input-group">
+                        <input type="password" id="user-password" name="pass" placeholder="Enter your password" required>
+                    </div>
+                    <button type="submit" class="login-btn">
+                        Sign In
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="btn-icon">
+                            <path d="M5 12h14"/>
+                            <path d="M12 5l7 7-7 7"/>
+                        </svg>
+                    </button>
+                    <a href="/register" class="create-account">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="link-icon">
+                            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
+                            <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                        </svg>
+                        Create new space
+                    </a>
+                </form>
+
+                <!-- Enhanced Admin Login Form -->
+                <form action="/admin_login" method="POST" class="auth-form" id="adminForm" style="display: none;">
+                    <div class="form-header admin-header">
+                        <h3>Administrator Access</h3>
+                        <p>Restricted to authorized personnel only</p>
+                        <p class="admin-note">Single admin - registration unavailable</p>
+                    </div>
+                    <div class="input-group">
+                        <input type="email" id="admin-email" name="email" placeholder="Admin email address" required>
+                    </div>
+                    <div class="input-group">
+                        <input type="password" id="admin-password" name="pass" placeholder="Admin password" required>
+                    </div>
+                    <button type="submit" class="login-btn admin-btn">
+                        Access
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="btn-icon">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                            <path d="M9 12l2 2 4-4"/>
+                        </svg>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile menu toggle button -->
+    <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+</nav>
+
+<style>
+:root {
+    --transition-speed: 250ms;
+    --transition-timing: cubic-bezier(0.4, 0, 0.2, 1);
+    --primary: #6366f1;
+    --primary-dark: #4f46e5;
+    --primary-light: #818cf8;
+    --admin-primary: #dc2626;
+    --admin-primary-dark: #b91c1c;
+    --dark: #0f172a;
+    --dark-light: #334155;
+    --gray: #64748b;
+    --glass-effect: rgba(255, 255, 255, 0.65);
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.08);
+    --gradient-primary: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    --gradient-admin: linear-gradient(135deg, var(--admin-primary), var(--admin-primary-dark));
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    transition: background-color 0.5s var(--transition-timing);
+    background: #f8fafc;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: clamp(0.75rem, 2vw, 1rem) clamp(3%, 5vw, 5%);
+    position: fixed;
+    top: clamp(0.5rem, 1.5vw, 1rem);
+    left: 50%;
+    transform: translateX(-50%);
+    width: clamp(85%, 90%, 95%);
+    max-width: 1400px;
+    z-index: 100;
+    background: var(--glass-effect);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: clamp(10px, 1.5vw, 12px);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--shadow-md);
+    transition: all 0.3s var(--transition-timing);
+}
+
+.navbar.scrolled {
+    top: 0;
+    width: 100%;
+    max-width: 100%;
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+    box-shadow: var(--shadow-sm);
+    padding: clamp(0.7rem, 1.5vw, 0.9rem) clamp(3%, 5vw, 5%);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: clamp(0.5rem, 1vw, 0.75rem);
+    text-decoration: none;
+    z-index: 110;
+    transition: opacity 0.3s var(--transition-timing);
+}
+
+.logo:hover {
+    opacity: 0.85;
+}
+
+.logo-img {
+    width: clamp(36px, 5vw, 42px);
+    height: clamp(36px, 5vw, 42px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--gradient-primary);
+    color: white;
+    border-radius: clamp(8px, 1.2vw, 10px);
+    font-weight: 700;
+    font-size: clamp(1rem, 1.5vw, 1.2rem);
+    font-family: 'Space Grotesk', -apple-system, sans-serif;
+    box-shadow: 0 1px 3px rgba(99, 102, 241, 0.15);
+    transition: all 0.3s var(--transition-timing);
+}
+
+.logo:hover .logo-img {
+    box-shadow: 0 2px 6px rgba(99, 102, 241, 0.2);
+}
+
+.logo-text {
+    font-family: 'Space Grotesk', -apple-system, sans-serif;
+    font-weight: 700;
+    font-size: clamp(1.1rem, 1.8vw, 1.3rem);
+    color: var(--dark);
+    line-height: 1.1;
+    display: flex;
+    flex-direction: column;
+}
+
+.nav-links {
+    display: flex;
+    gap: clamp(0.5rem, 1.5vw, 1.25rem);
+    align-items: center;
+    transition: transform 0.5s var(--transition-timing);
+}
+
+.nav-links a {
+    color: var(--dark);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: clamp(0.85rem, 1.2vw, 0.95rem);
+    transition: all 0.3s var(--transition-timing);
+    position: relative;
+    padding: clamp(0.4rem, 0.8vw, 0.5rem) clamp(0.6rem, 1vw, 0.85rem);
+    border-radius: 8px;
+    white-space: nowrap;
+}
+
+.nav-links a:hover {
+    background-color: rgba(99, 102, 241, 0.08);
+    color: var(--primary-dark);
+}
+
+.nav-links a.active {
+    background-color: rgba(99, 102, 241, 0.12);
+    color: var(--primary-dark);
+    font-weight: 600;
+}
+
+/* Enhanced space button */
+.auth-toggle {
+    background: rgba(255, 255, 255, 0.4);
+    border: 1px solid rgba(99, 102, 241, 0.15);
+    cursor: pointer;
+    padding: clamp(0.4rem, 0.8vw, 0.5rem) clamp(0.6rem, 1vw, 0.8rem);
+    border-radius: 8px;
+    transition: all 0.25s var(--transition-timing);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(0.3rem, 0.6vw, 0.4rem);
+    color: var(--dark);
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.auth-toggle:hover {
+    border-color: rgba(99, 102, 241, 0.25);
+    background: rgba(99, 102, 241, 0.06);
+}
+
+.auth-toggle.active {
+    border-color: rgba(99, 102, 241, 0.3);
+    background: rgba(99, 102, 241, 0.1);
+}
+
+.space-svg {
+    width: clamp(14px, 2vw, 16px);
+    height: clamp(14px, 2vw, 16px);
+    transition: all 0.25s var(--transition-timing);
+}
+
+.auth-toggle:hover .space-svg {
+    transform: scale(1.05);
+}
+
+.auth-toggle.active .space-svg {
+    transform: rotate(180deg);
+}
+
+.user-text {
+    font-size: clamp(0.85rem, 1.2vw, 0.92rem);
+    font-weight: 500;
+    letter-spacing: 0.01em;
+}
+
+/* Enhanced dropdown styling */
+.auth-dropdown {
+    position: relative;
+}
+
+.auth-dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: calc(100% + 8px);
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    min-width: clamp(280px, 35vw, 320px);
+    max-width: min(90vw, 400px);
+    box-shadow: var(--shadow-lg);
+    z-index: 999;
+    border-radius: 12px;
+    padding: clamp(1rem, 2vw, 1.3rem);
+    border: 1px solid var(--glass-border);
+    transform-origin: top right;
+}
+
+.navbar.scrolled .auth-dropdown-content {
+    position: fixed;
+    top: clamp(3.5rem, 8vw, 4.5rem);
+    right: clamp(3%, 5vw, 5%);
+}
+
+.auth-dropdown-content.show {
+    display: block;
+    animation: dropdownFade 0.25s var(--transition-timing);
+}
+
+@keyframes dropdownFade {
+    from {
+        opacity: 0;
+        transform: translateY(-8px) scale(0.96);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Enhanced toggle design */
+.login-type-toggle {
+    display: flex;
+    background: rgba(241, 245, 249, 0.8);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border-radius: 10px;
+    padding: 4px;
+    margin-bottom: clamp(1rem, 2vw, 1.2rem);
+    position: relative;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.toggle-indicator {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: calc(50% - 4px);
+    height: calc(100% - 8px);
+    background: white;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border-radius: 8px;
+    transition: transform 0.3s var(--transition-timing);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.toggle-indicator.admin {
+    transform: translateX(calc(100% + 4px));
+}
+
+.toggle-btn {
+    flex: 1;
+    padding: clamp(0.55rem, 1.2vw, 0.7rem) clamp(0.6rem, 1.2vw, 0.8rem);
+    border: none;
+    background: transparent;
+    color: var(--gray);
+    font-size: clamp(0.8rem, 1.1vw, 0.87rem);
+    font-weight: 500;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s var(--transition-timing);
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(0.35rem, 0.6vw, 0.45rem);
+}
+
+.toggle-btn.active {
+    color: var(--dark);
+    font-weight: 600;
+}
+
+.toggle-icon {
+    width: clamp(13px, 2vw, 14px);
+    height: clamp(13px, 2vw, 14px);
+    transition: transform 0.25s var(--transition-timing);
+}
+
+.toggle-btn.active .toggle-icon {
+    transform: scale(1.05);
+}
+
+/* Enhanced form design */
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(0.85rem, 1.5vw, 1.1rem);
+}
+
+.form-header {
+    text-align: center;
+    margin-bottom: clamp(0.3rem, 0.8vw, 0.6rem);
+}
+
+.form-header h3 {
+    margin: 0;
+    font-size: clamp(1.05rem, 1.6vw, 1.15rem);
+    font-weight: 600;
+    color: var(--dark);
+    margin-bottom: clamp(0.2rem, 0.4vw, 0.3rem);
+    letter-spacing: -0.01em;
+}
+
+.form-header p {
+    margin: 0;
+    font-size: clamp(0.78rem, 1.1vw, 0.82rem);
+    color: var(--gray);
+    font-weight: 400;
+}
+
+.admin-header h3 {
+    color: var(--admin-primary);
+}
+
+.admin-note {
+    font-size: clamp(0.7rem, 1vw, 0.75rem);
+    color: #ef4444;
+    margin-top: clamp(0.4rem, 0.8vw, 0.6rem);
+    font-weight: 500;
+}
+
+.input-group {
+    position: relative;
+}
+
+.input-group input {
+    width: 100%;
+    padding: clamp(0.7rem, 1.2vw, 0.8rem) clamp(0.85rem, 1.4vw, 0.95rem);
+    border-radius: 10px;
+    border: 1px solid rgba(226, 232, 240, 0.8);
+    background: rgba(248, 250, 252, 0.8);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    color: var(--dark);
+    outline: none;
+    transition: all 0.25s var(--transition-timing);
+    font-size: clamp(0.87rem, 1.2vw, 0.9rem);
+    font-weight: 400;
+}
+
+.input-group input::placeholder {
+    color: #94a3b8;
+    font-weight: 400;
+}
+
+.input-group input:focus {
+    border-color: var(--primary);
+    background: white;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.06);
+}
+
+.admin-form .input-group input:focus {
+    border-color: var(--admin-primary);
+    box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.06);
+}
+
+/* Enhanced button design */
+.login-btn {
+    padding: clamp(0.75rem, 1.3vw, 0.85rem) clamp(1rem, 1.6vw, 1.15rem);
+    border-radius: 10px;
+    border: none;
+    background: var(--gradient-primary);
+    color: white;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: clamp(0.88rem, 1.2vw, 0.92rem);
+    transition: all 0.25s var(--transition-timing);
+    margin-bottom: clamp(0.6rem, 1vw, 0.75rem);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(0.4rem, 0.8vw, 0.5rem);
+    box-shadow: 0 2px 8px rgba(99, 102, 241, 0.2);
+    letter-spacing: 0.01em;
+}
+
+.login-btn:hover {
+    box-shadow: 0 3px 12px rgba(99, 102, 241, 0.25);
+    opacity: 0.95;
+}
+
+.login-btn:active {
+    transform: scale(0.98);
+    box-shadow: 0 2px 8px rgba(99, 102, 241, 0.2);
+}
+
+.admin-btn {
+    background: var(--gradient-admin);
+    box-shadow: 0 2px 8px rgba(220, 38, 38, 0.2);
+}
+
+.admin-btn:hover {
+    box-shadow: 0 3px 12px rgba(220, 38, 38, 0.25);
+}
+
+.btn-icon {
+    width: clamp(15px, 2vw, 16px);
+    height: clamp(15px, 2vw, 16px);
+    transition: transform 0.25s var(--transition-timing);
+}
+
+.login-btn:hover .btn-icon {
+    transform: translateX(2px);
+}
+
+.create-account {
+    color: var(--primary);
+    text-decoration: none;
+    font-size: clamp(0.82rem, 1.1vw, 0.86rem);
+    text-align: center;
+    font-weight: 500;
+    transition: all 0.25s var(--transition-timing);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(0.35rem, 0.6vw, 0.4rem);
+    padding: clamp(0.5rem, 0.9vw, 0.6rem);
+    border-radius: 8px;
+}
+
+.create-account:hover {
+    color: var(--primary-dark);
+    background: rgba(99, 102, 241, 0.05);
+}
+
+.link-icon {
+    width: clamp(13px, 2vw, 14px);
+    height: clamp(13px, 2vw, 14px);
+    transition: transform 0.25s var(--transition-timing);
+}
+
+.create-account:hover .link-icon {
+    transform: translateX(1px);
+}
+
+/* Mobile menu toggle */
+.mobile-menu-toggle {
+    display: none;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    width: clamp(26px, 4vw, 32px);
+    height: clamp(22px, 3.5vw, 26px);
+    position: relative;
+    z-index: 110;
+    padding: 0;
+}
+
+.mobile-menu-toggle span {
+    display: block;
+    width: 100%;
+    height: 2.5px;
+    background-color: var(--dark);
+    position: absolute;
+    left: 0;
+    border-radius: 2px;
+    transition: all 0.3s var(--transition-timing);
+}
+
+.mobile-menu-toggle span:nth-child(1) {
+    top: 0;
+}
+
+.mobile-menu-toggle span:nth-child(2) {
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.mobile-menu-toggle span:nth-child(3) {
+    bottom: 0;
+}
+
+.mobile-menu-toggle.active span:nth-child(1) {
+    transform: translateY(calc(50% + 1px)) rotate(45deg);
+}
+
+.mobile-menu-toggle.active span:nth-child(2) {
+    opacity: 0;
+    transform: translateX(-100%);
+}
+
+.mobile-menu-toggle.active span:nth-child(3) {
+    transform: translateY(calc(-50% - 1px)) rotate(-45deg);
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+    .navbar {
+        width: 92%;
+    }
+}
+
+@media (max-width: 992px) {
+    .logo-text {
+        display: none;
+    }
+    
+    .nav-links {
+        gap: clamp(0.6rem, 1.2vw, 1rem);
+    }
+    
+    .nav-links a {
+        font-size: 0.88rem;
+        padding: 0.45rem 0.7rem;
+    }
+    
+    .auth-dropdown-content {
+        min-width: 290px;
+        right: -10px;
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        padding: clamp(0.8rem, 2vw, 1rem) 4%;
+        width: 94%;
+        top: 0.75rem;
+    }
+    
+    .navbar.scrolled {
+        padding: 0.8rem 4%;
+    }
+    
+    .user-text {
+        display: none;
+    }
+    
+    .mobile-menu-toggle {
+        display: block;
+    }
+    
+    .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        height: 100vh;
+        height: 100dvh;
+        width: 85%;
+        max-width: 340px;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: stretch;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        box-shadow: -4px 0 24px rgba(0, 0, 0, 0.08);
+        padding: clamp(5rem, 12vh, 6.5rem) clamp(1.2rem, 3vw, 1.8rem) 2rem;
+        z-index: 105;
+        transition: right 0.3s var(--transition-timing);
+        gap: clamp(0.8rem, 2vh, 1.2rem);
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .nav-links.active {
+        right: 0;
+    }
+    
+    .nav-links a {
+        width: 100%;
+        text-align: center;
+        padding: 0.85rem 1rem;
+        border-radius: 10px;
+        font-size: 0.95rem;
+    }
+    
+    .auth-dropdown {
+        width: 100%;
+        margin-top: 1.5rem;
+    }
+    
+    .auth-toggle {
+        width: 100%;
+        justify-content: center;
+        padding: 0.85rem 1rem;
+    }
+    
+    .auth-dropdown-content {
+        position: relative;
+        right: auto;
+        top: auto;
+        width: 100%;
+        min-width: auto;
+        max-width: none;
+        margin-top: 0.75rem;
+        padding: 1.1rem;
+        border-radius: 12px;
+    }
+    
+    .navbar.scrolled .auth-dropdown-content {
+        position: relative;
+        top: auto;
+        right: auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar {
+        padding: 0.75rem 3%;
+        width: 96%;
+        top: 0.5rem;
+    }
+    
+    .logo-img {
+        width: 38px;
+        height: 38px;
+        font-size: 1.1rem;
+    }
+    
+    .nav-links {
+        width: 90%;
+        max-width: 300px;
+        padding: 4.5rem 1rem 1.5rem;
+        gap: 0.9rem;
+    }
+    
+    .nav-links a {
+        padding: 0.8rem 0.9rem;
+        font-size: 0.92rem;
+    }
+    
+    .auth-dropdown-content {
+        padding: 1rem;
+    }
+    
+    .input-group input {
+        font-size: 16px;
+        padding: 0.75rem 0.9rem;
+    }
+    
+    .login-btn {
+        padding: 0.85rem 1rem;
+        font-size: 0.92rem;
+    }
+}
+
+@media (max-width: 360px) {
+    .navbar {
+        padding: 0.65rem 2.5%;
+        width: 97%;
+    }
+    
+    .logo-img {
+        width: 36px;
+        height: 36px;
+        font-size: 1rem;
+    }
+    
+    .nav-links {
+        width: 92%;
+        max-width: 280px;
+        padding: 4rem 0.9rem 1.2rem;
+    }
+    
+    .nav-links a {
+        font-size: 0.9rem;
+    }
+}
+
+/* Large desktop optimization */
+@media (min-width: 1600px) {
+    .navbar {
+        padding: 1.35rem 4%;
+    }
+    
+    .logo-img {
+        width: 46px;
+        height: 46px;
+    }
+    
+    .nav-links {
+        gap: 1.5rem;
+    }
+    
+    .auth-dropdown-content {
+        min-width: 340px;
+    }
+}
+
+/* Prevent body scroll when mobile menu is open */
+body.menu-open {
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+    .nav-links a:active {
+        background-color: rgba(99, 102, 241, 0.1);
+    }
+    
+    .auth-toggle:active {
+        transform: scale(0.98);
+    }
+    
+    .login-btn:active {
+        opacity: 0.9;
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .navbar {
+        border-width: 2px;
+    }
+    
+    .nav-links a,
+    .auth-toggle {
+        border-width: 2px;
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // Get the current path
+    const currentPath = window.location.pathname;
+
+    // Remove active class from all links
+    const navLinks = document.querySelectorAll('.nav-links > a');
+    navLinks.forEach(link => {
+        link.classList.remove('active');
+    });
+
+    // Add active class to the current page link
+    if (currentPath === '/' || currentPath === '') {
+        document.getElementById('home-link')?.classList.add('active');
+    } else {
+        const pagePath = currentPath.toLowerCase();
+        if (pagePath.includes('about')) {
+            document.getElementById('about-link')?.classList.add('active');
+        } else if (pagePath.includes('blog')) {
+            document.getElementById('blog-link')?.classList.add('active');
+        } else if (pagePath.includes('contact')) {
+            document.getElementById('contact-link')?.classList.add('active');
+        }
+    }
+
+    // Auth dropdown functionality
+    const authToggle = document.getElementById('authToggle');
+    const authDropdown = document.getElementById('authDropdown');
+    const toggleIndicator = document.getElementById('toggleIndicator');
+
+    // Login type toggle functionality
+    const userToggle = document.getElementById('userToggle');
+    const adminToggle = document.getElementById('adminToggle');
+    const userForm = document.getElementById('userForm');
+    const adminForm = document.getElementById('adminForm');
+
+    if (userToggle && adminToggle && userForm && adminForm && toggleIndicator) {
+        userToggle.onclick = function() {
+            userToggle.classList.add('active');
+            adminToggle.classList.remove('active');
+            userForm.style.display = 'flex';
+            adminForm.style.display = 'none';
+            toggleIndicator.classList.remove('admin');
+        };
+
+        adminToggle.onclick = function() {
+            adminToggle.classList.add('active');
+            userToggle.classList.remove('active');
+            adminForm.style.display = 'flex';
+            userForm.style.display = 'none';
+            toggleIndicator.classList.add('admin');
+        };
+    }
+
+    if (authToggle && authDropdown) {
+        authToggle.onclick = function (event) {
+            event.preventDefault();
+            authDropdown.classList.toggle('show');
+            this.classList.toggle('active');
+
+            if (authDropdown.classList.contains('show')) {
+                const isUserMode = userToggle?.classList.contains('active');
+                const emailInput = document.getElementById(isUserMode ? 'user-email' : 'admin-email');
+                if (emailInput) {
+                    setTimeout(() => emailInput.focus(), 100);
+                }
+            }
+
+            event.stopPropagation();
+        };
+    }
+
+    // Mobile menu toggle functionality
+    const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+    const navLinksContainer = document.querySelector('.nav-links');
+
+    if (mobileMenuToggle && navLinksContainer) {
+        mobileMenuToggle.onclick = function () {
+            this.classList.toggle('active');
+            navLinksContainer.classList.toggle('active');
+
+            if (navLinksContainer.classList.contains('active')) {
+                document.body.classList.add('menu-open');
+            } else {
+                document.body.classList.remove('menu-open');
+            }
+        };
+
+        // Close menu when clicking on nav links
+        const mobileNavLinks = navLinksContainer.querySelectorAll('a:not(.create-account)');
+        mobileNavLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 768) {
+                    mobileMenuToggle.classList.remove('active');
+                    navLinksContainer.classList.remove('active');
+                    document.body.classList.remove('menu-open');
+                }
+            });
+        });
+    }
+
+    // Close dropdowns when clicking outside
+    window.onclick = function (event) {
+        if (authToggle && authDropdown && !authToggle.contains(event.target) && !authDropdown.contains(event.target)) {
+            authDropdown.classList.remove('show');
+            authToggle.classList.remove('active');
+        }
+
+        if (navLinksContainer && navLinksContainer.classList.contains('active') &&
+            !navLinksContainer.contains(event.target) &&
+            !mobileMenuToggle?.contains(event.target)) {
+            mobileMenuToggle?.classList.remove('active');
+            navLinksContainer.classList.remove('active');
+            document.body.classList.remove('menu-open');
+        }
+    };
+
+    // Enhanced navbar scroll effect with throttle
+    let scrollTimeout;
+    let lastScrollTop = 0;
+    
+    window.addEventListener('scroll', function () {
+        if (!scrollTimeout) {
+            scrollTimeout = setTimeout(function() {
+                const navbar = document.getElementById('navbar');
+                if (navbar) {
+                    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                    
+                    if (scrollTop > 20) {
+                        navbar.classList.add('scrolled');
+                    } else {
+                        navbar.classList.remove('scrolled');
+                    }
+                    
+                    lastScrollTop = scrollTop;
+                }
+                scrollTimeout = null;
+            }, 10);
+        }
+    }, { passive: true });
+
+    // Handle viewport changes and orientation
+    let resizeTimeout;
+    window.addEventListener('resize', function() {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(function() {
+            // Close mobile menu on resize to larger screen
+            if (window.innerWidth > 768) {
+                if (navLinksContainer?.classList.contains('active')) {
+                    navLinksContainer.classList.remove('active');
+                    mobileMenuToggle?.classList.remove('active');
+                    document.body.classList.remove('menu-open');
+                }
+            }
+            
+            // Reposition auth dropdown if open
+            if (authDropdown?.classList.contains('show')) {
+                authDropdown.classList.remove('show');
+                authToggle?.classList.remove('active');
+            }
+        }, 250);
+    });
+
+    // Handle orientation change on mobile
+    window.addEventListener('orientationchange', function() {
+        setTimeout(function() {
+            if (authDropdown?.classList.contains('show')) {
+                authDropdown.classList.remove('show');
+                authToggle?.classList.remove('active');
+            }
+            
+            if (navLinksContainer?.classList.contains('active')) {
+                navLinksContainer.classList.remove('active');
+                mobileMenuToggle?.classList.remove('active');
+                document.body.classList.remove('menu-open');
+            }
+        }, 100);
+    });
+
+    // Prevent dropdown from closing when clicking inside
+    if (authDropdown) {
+        authDropdown.addEventListener('click', function(event) {
+            event.stopPropagation();
+        });
+    }
+
+    // Enhanced keyboard navigation
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+            if (authDropdown?.classList.contains('show')) {
+                authDropdown.classList.remove('show');
+                authToggle?.classList.remove('active');
+                authToggle?.focus();
+            }
+            
+            if (navLinksContainer?.classList.contains('active')) {
+                navLinksContainer.classList.remove('active');
+                mobileMenuToggle?.classList.remove('active');
+                document.body.classList.remove('menu-open');
+                mobileMenuToggle?.focus();
+            }
+        }
+    });
+});
+</script>

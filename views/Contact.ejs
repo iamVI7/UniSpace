@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="headlogo.png" type="image/png">
+    <title>Get in Touch</title>
+    <!-- Google Fonts and Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="contactstyle.css">
+</head>
+
+<body>
+    <div class="background-wrapper">
+        <div class="gradient-bg"></div>
+    </div>
+
+    <!-- Navbar is now in a separate file -->
+    <%- include('navbar') %>
+
+        <!-- Contact Hero Section -->
+        <section class="contact-hero">
+            <div class="contact-hero-content">
+                <h1 class="contact-hero-title">Let's Build Something Amazing Together</h1>
+                <p class="contact-hero-subtitle">
+                    I'm currently available for work and new opportunities. Whether you have a project to discuss
+                    or just want to say hello, I'd love to hear from you.
+                </p>
+                <div class="scroll-down">
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="contact-section">
+            <div class="section-container">
+                <div class="section-title-container">
+                    <h2 class="section-title"><i class="fas fa-paper-plane"></i>Get In Touch</h2>
+                    <p class="section-subtitle">Have a question or want to work together ? <br>
+                        Fill out the form below or reach
+                        out directly through my contact information.</p>
+                </div>
+
+                <div class="contact-container">
+                    <div>
+                        <div class="contact-info glass-card">
+                            <h2 class="contact-info-title">Contact Details</h2>
+
+                            <div class="contact-method">
+                                <div class="contact-icon">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div class="contact-details">
+                                    <h3>Email</h3>
+                                    <a href="mailto:vishalyadav75186@gmail.com">inducer41@gmail.com</a>
+                                </div>
+                            </div>
+
+                            <div class="contact-method">
+                                <div class="contact-icon">
+                                    <i class="fas fa-phone-alt"></i>
+                                </div>
+                                <div class="contact-details">
+                                    <h3>Phone</h3>
+                                    <a href="tel:+917518657929">+91 7518657929</a>
+                                </div>
+                            </div>
+
+                            <div class="contact-method">
+                                <div class="contact-icon">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <div class="contact-details">
+                                    <h3>Location</h3>
+                                    <p>Prayagraj, Uttar Pradesh, India</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="social-card glass-card">
+                            <h3 class="social-card-title">Connect With Me</h3>
+                            <div class="social-links">
+                                <a href="https://www.linkedin.com/in/vishal-yadav-v7" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                                <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                                <!-- <a href="#" class="social-link"><i class="fab fa-instagram"></i></a> -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="contact-form glass-card">
+                        <!-- Success Message Overlay -->
+                        <div id="successMessage" class="success-message">
+                            <div class="success-icon">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <h3 class="success-title">Message Sent!</h3>
+                            <p class="success-text">Thanks for reaching out. I'll get back to you as soon as possible.</p>
+                            <button class="success-button" id="sendAnotherBtn">Send Another Message</button>
+                        </div>
+
+                        <form id="contactForm">
+                            <div id="errorMessage" class="error-message"></div>
+                            <div class="form-group">
+                                <label for="name" class="form-label">Your Name</label>
+                                <input type="text" id="name" name="name" class="form-control"
+                                    placeholder="Enter your name" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email" class="form-label">Email Address</label>
+                                <input type="email" id="email" name="email" class="form-control"
+                                    placeholder="Enter your email" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="subject" class="form-label">Subject</label>
+                                <input type="text" id="subject" name="subject" class="form-control"
+                                    placeholder="What's this about?">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="message" class="form-label">Your Message</label>
+                                <textarea id="message" name="message" class="form-control"
+                                    placeholder="Hi Vishal, I'd like to talk about..." required></textarea>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-paper-plane"></i> Send Message
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+        </section>
+
+        <!-- Include Footer -->
+        <%- include('footer') %>
+
+        <script>
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+
+            // Contact Form Submission
+            const contactForm = document.getElementById('contactForm');
+            const successMessage = document.getElementById('successMessage');
+            const sendAnotherBtn = document.getElementById('sendAnotherBtn');
+            const errorMessage = document.getElementById('errorMessage');
+            const submitButton = contactForm.querySelector('button[type="submit"]');
+
+            // Show success message
+            function showSuccessMessage() {
+                successMessage.classList.add('show');
+            }
+
+            // Hide success message and show form
+            function hideSuccessMessage() {
+                successMessage.classList.remove('show');
+                contactForm.reset();
+            }
+
+            // Send another message button handler
+            sendAnotherBtn.addEventListener('click', hideSuccessMessage);
+
+            contactForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                // Disable submit button and show loading state
+                submitButton.disabled = true;
+                submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+
+                // Hide any previous error message
+                errorMessage.style.display = 'none';
+
+                // Create object from form data
+                const formData = Object.fromEntries(new FormData(contactForm));
+
+                try {
+                    // Send form data to backend
+                    const response = await fetch('/contact', {
+                        method: 'POST',
+                        body: JSON.stringify(formData),
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
+
+                    // Get response text for logging
+                    const responseText = await response.text();
+                    let responseData;
+
+                    try {
+                        responseData = JSON.parse(responseText);
+                    } catch (parseError) {
+                        console.error('JSON Parse Error:', parseError);
+                        responseData = { message: responseText || 'Message sent successfully!' };
+                    }
+
+                    // Check if response indicates success
+                    if (response.ok) {
+                        // Show success message
+                        showSuccessMessage();
+                    } else {
+                        // Handle error response
+                        throw new Error(responseData.error || responseData.message || 'Failed to send message');
+                    }
+                } catch (error) {
+                    console.error('Submission Error:', error);
+
+                    // Show error message
+                    errorMessage.textContent = error.message || 'Failed to send message. Please try again.';
+                    errorMessage.style.display = 'block';
+
+                    // Hide error message after 5 seconds
+                    setTimeout(() => {
+                        errorMessage.style.display = 'none';
+                    }, 5000);
+                } finally {
+                    // Re-enable submit button
+                    submitButton.disabled = false;
+                    submitButton.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message';
+                }
+            });
+        </script>
+</body>
+
+</html>

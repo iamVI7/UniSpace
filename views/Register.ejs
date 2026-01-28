@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="headlogo.png" type="image/png">
+  <title>Create Your Space</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+    :root {
+      --primary: #6366f1;
+      --primary-dark: #4f46e5;
+      --secondary: #10b981;
+      --dark: #0f172a;
+      --light: #f8fafc;
+      --gray: #64748b;
+      --light-gray: #e2e8f0;
+      --card-bg: rgba(255, 255, 255, 0.85);
+      --glass-effect: rgba(255, 255, 255, 0.7);
+      --glass-border: rgba(255, 255, 255, 0.3);
+      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      --shadow-xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      height: 100%;
+    }
+
+    body {
+      background-color: #f1f5f9;
+      color: var(--dark);
+      font-family: 'Inter', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Animated gradient background */
+    .background-wrapper {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      overflow: hidden;
+    }
+
+    .gradient-bg {
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at 70% 30%, rgba(99, 102, 241, 0.15) 0%, transparent 40%),
+        radial-gradient(circle at 30% 70%, rgba(16, 185, 129, 0.15) 0%, transparent 40%);
+      animation: rotate 20s linear infinite;
+    }
+
+    @keyframes rotate {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    .registration-container {
+      width: 100%;
+      max-width: 520px;
+      position: relative;
+      z-index: 10;
+    }
+
+    .glass-card {
+      background: var(--glass-effect);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 16px;
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      transition: var(--transition);
+      max-height: calc(100vh - 4rem);
+    }
+
+    .glass-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    /* Progress Bar */
+    .progress-container {
+      padding: 2rem 2rem 1rem;
+      text-align: center;
+    }
+
+    .progress-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+
+    .progress-line {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background-color: var(--light-gray);
+      z-index: 1;
+      transform: translateY(-50%);
+    }
+
+    .progress-line-active {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      z-index: 2;
+      transform: translateY(-50%);
+      transition: width 0.5s ease;
+    }
+
+    .step-indicator {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 0.9rem;
+      position: relative;
+      z-index: 3;
+      transition: var(--transition);
+      background: white;
+      border: 2px solid var(--light-gray);
+      color: var(--gray);
+    }
+
+    .step-indicator.active {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      border-color: var(--primary);
+      color: white;
+      transform: scale(1.1);
+    }
+
+    .step-indicator.completed {
+      background: linear-gradient(135deg, var(--secondary), #0d9488);
+      border-color: var(--secondary);
+      color: white;
+    }
+
+    .step-labels {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 0.5rem;
+    }
+
+    .step-label {
+      font-size: 0.75rem;
+      color: var(--gray);
+      text-align: center;
+      flex: 1;
+      transition: var(--transition);
+    }
+
+    .step-label.active {
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    /* Header */
+    .header {
+      padding: 2rem 2rem 1rem;
+      text-align: center;
+    }
+
+    .header h2 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      font-family: 'Space Grotesk', sans-serif;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
+    }
+
+    .header p {
+      color: var(--gray);
+      font-size: 0.95rem;
+      line-height: 1.4;
+    }
+
+    /* Form Steps */
+    .form-container {
+      padding: 1.5rem 2rem 2rem;
+    }
+
+    .step {
+      display: none;
+      animation: fadeInSlide 0.5s ease forwards;
+    }
+
+    .step.active {
+      display: block;
+    }
+
+    @keyframes fadeInSlide {
+      from {
+        opacity: 0;
+        transform: translateX(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      color: var(--dark);
+      font-size: 0.9rem;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 1rem 1.2rem;
+      border: 1px solid var(--light-gray);
+      border-radius: 8px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      transition: var(--transition);
+      background-color: white;
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+    }
+
+    .form-control.focus-animate {
+      animation: focusGlow 0.6s ease-out;
+    }
+
+    @keyframes focusGlow {
+      0% {
+        border-color: var(--light-gray);
+        box-shadow: none;
+        transform: scale(1);
+      }
+      50% {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
+        transform: scale(1.02);
+      }
+      100% {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        transform: scale(1);
+      }
+    }
+
+    /* Button Styles */
+    .btn {
+      padding: 0.8rem 2rem;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      font-family: 'Inter', sans-serif;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      font-size: 0.95rem;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      box-shadow: var(--shadow);
+      width: 100%;
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+      box-shadow: var(--shadow);
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--gray);
+      border: 1px solid var(--light-gray);
+    }
+
+    .btn-secondary:hover {
+      background-color: rgba(99, 102, 241, 0.05);
+      border-color: var(--primary);
+      color: var(--primary);
+      transform: translateY(-1px);
+    }
+
+    .button-group {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .button-group .btn {
+      flex: 1;
+    }
+
+    /* Success Message */
+    .success-message {
+      display: none;
+      background: linear-gradient(135deg, var(--secondary), #0d9488);
+      color: white;
+      padding: 2rem;
+      border-radius: 16px;
+      text-align: center;
+      animation: slideDown 0.5s ease;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .success-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .success-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    .success-text {
+      font-size: 1rem;
+      opacity: 0.9;
+    }
+
+    .shape {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.1;
+      z-index: -1;
+    }
+
+    .shape-1 {
+      width: 300px;
+      height: 300px;
+      background: var(--primary);
+      top: -150px;
+      right: -150px;
+      filter: blur(80px);
+    }
+
+    .shape-2 {
+      width: 200px;
+      height: 200px;
+      background: var(--secondary);
+      bottom: -100px;
+      left: -100px;
+      filter: blur(60px);
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    .fade-in {
+      animation: fadeIn 0.8s ease forwards;
+    }
+
+    @media (max-width: 768px) {
+      .button-group {
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .registration-container {
+        max-width: 100%;
+        padding: 0 1rem;
+      }
+
+      .progress-container {
+        padding: 1.5rem 1.5rem 0.8rem;
+      }
+
+      .header {
+        padding: 0 1.5rem 0.8rem;
+      }
+
+      .header h2 {
+        font-size: 1.6rem;
+      }
+
+      .form-container {
+        padding: 1.2rem 1.5rem 1.5rem;
+      }
+
+      .step-indicator {
+        width: 35px;
+        height: 35px;
+        font-size: 0.8rem;
+      }
+
+      .step-label {
+        font-size: 0.7rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="background-wrapper">
+    <div class="gradient-bg"></div>
+  </div>
+
+  <div class="registration-container" id="registration-container">
+    <div class="glass-card">
+      <div id="success-message" class="success-message">
+        <div class="success-icon">
+          <i class="fas fa-check-circle"></i>
+        </div>
+        <div class="success-title">Registration Successful!</div>
+        <div class="success-text">Your account has been created. Getting your Space ready...</div>
+      </div>
+
+      <div id="form-content">
+        <!-- Progress Bar -->
+        <div class="progress-container">
+          <div class="progress-bar">
+            <div class="progress-line"></div>
+            <div class="progress-line-active" id="progress-line-active"></div>
+            <div class="step-indicator active" id="step-1">
+              <i class="fas fa-user"></i>
+            </div>
+            <div class="step-indicator" id="step-2">
+              <i class="fas fa-envelope"></i>
+            </div>
+            <div class="step-indicator" id="step-3">
+              <i class="fas fa-briefcase"></i>
+            </div>
+            <div class="step-indicator" id="step-4">
+              <i class="fas fa-lock"></i>
+            </div>
+          </div>
+          <div class="step-labels">
+            <div class="step-label active">Personal</div>
+            <div class="step-label">Contact</div>
+            <div class="step-label">Professional</div>
+            <div class="step-label">Security</div>
+          </div>
+        </div>
+
+        <div class="header">
+          <h2 id="step-title">Personal Information</h2>
+          <p id="step-description">Let's start with your basic information</p>
+        </div>
+
+        <div class="form-container">
+          <form id="registration-form">
+            <!-- Step 1: Personal Information -->
+            <div class="step active" id="step-content-1">
+              <div class="form-group">
+                <label for="name" class="form-label">Full Name</label>
+                <input type="text" name="name" id="name" class="form-control" placeholder="Enter your full name" required>
+              </div>
+              <div class="button-group">
+                <button type="button" class="btn btn-primary" onclick="nextStep()">
+                  Next <i class="fas fa-arrow-right"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Step 2: Contact Information -->
+            <div class="step" id="step-content-2">
+              <div class="form-group">
+                <label for="email" class="form-label">Email Address</label>
+                <input type="email" name="email" id="email" class="form-control" placeholder="your@email.com" required>
+              </div>
+              <div class="button-group">
+                <button type="button" class="btn btn-secondary" onclick="prevStep()">
+                  <i class="fas fa-arrow-left"></i> Back
+                </button>
+                <button type="button" class="btn btn-primary" onclick="nextStep()">
+                  Next <i class="fas fa-arrow-right"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Step 3: Professional Information -->
+            <div class="step" id="step-content-3">
+              <div class="form-group">
+                <label for="profession" class="form-label">Profession</label>
+                <input type="text" name="profession" id="profession" class="form-control" placeholder="e.g., Developer, Designer, Manager">
+              </div>
+              <div class="button-group">
+                <button type="button" class="btn btn-secondary" onclick="prevStep()">
+                  <i class="fas fa-arrow-left"></i> Back
+                </button>
+                <button type="button" class="btn btn-primary" onclick="nextStep()">
+                  Next <i class="fas fa-arrow-right"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Step 4: Security -->
+            <div class="step" id="step-content-4">
+              <div class="form-group">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" name="pass" id="password" class="form-control" placeholder="Create a secure password" required>
+              </div>
+              <div class="form-group">
+                <label for="confirm-password" class="form-label">Confirm Password</label>
+                <input type="password" name="confirm_pass" id="confirm-password" class="form-control" placeholder="Confirm your password" required>
+              </div>
+              <div class="button-group">
+                <button type="button" class="btn btn-secondary" onclick="prevStep()">
+                  <i class="fas fa-arrow-left"></i> Back
+                </button>
+                <button type="submit" class="btn btn-primary">
+                  <i class="fas fa-user-plus"></i> Create Space
+                </button>
+              </div>
+            </div>
+          </form>
+
+          <div style="text-align: center; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--light-gray);">
+            <p style="color: var(--gray); font-size: 0.85rem; margin-bottom: 0.5rem;">Already have a space ?</p>
+            <a href="/" style="text-decoration: none;">
+              <button type="button" class="btn btn-secondary" style="width: auto; padding: 0.6rem 1.5rem;">
+                <i class="fas fa-sign-in-alt"></i> Sign In
+              </button>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="shape shape-1"></div>
+  <div class="shape shape-2"></div>
+
+  <script>
+    // Global variables
+    let currentStep = 1;
+    const totalSteps = 4;
+    const formData = {};
+
+    // Step titles and descriptions
+    const stepInfo = {
+      1: { title: "Personal Information", description: "Let's start with your basic information" },
+      2: { title: "Contact Details", description: "How can we reach you ?" },
+      3: { title: "Professional Info", description: "Tell us about your work" },
+      4: { title: "Space Security", description: "Secure your space" }
+    };
+
+    // Focus on first input when page loads
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        const nameInput = document.getElementById('name');
+        nameInput.classList.add('focus-animate');
+        nameInput.focus();
+        setTimeout(() => {
+          nameInput.classList.remove('focus-animate');
+        }, 600);
+      }, 300);
+    });
+
+    // Step navigation functions
+    function nextStep() {
+      if (validateCurrentStep()) {
+        saveCurrentStepData();
+        
+        if (currentStep < totalSteps) {
+          // Update step indicators
+          updateStepIndicator(currentStep, 'completed');
+          currentStep++;
+          updateStepIndicator(currentStep, 'active');
+          
+          // Update content
+          updateStepContent();
+          updateProgressBar();
+          
+          // Focus on first input of new step
+          setTimeout(() => {
+            const nextInput = document.querySelector(`#step-content-${currentStep} .form-control`);
+            if (nextInput) {
+              nextInput.classList.add('focus-animate');
+              nextInput.focus();
+              setTimeout(() => {
+                nextInput.classList.remove('focus-animate');
+              }, 600);
+            }
+          }, 100);
+        }
+      }
+    }
+
+    function prevStep() {
+      if (currentStep > 1) {
+        // Update step indicators
+        updateStepIndicator(currentStep, '');
+        currentStep--;
+        updateStepIndicator(currentStep, 'active');
+        
+        // Update content
+        updateStepContent();
+        updateProgressBar();
+      }
+    }
+
+    function updateStepIndicator(step, status) {
+      const indicator = document.getElementById(`step-${step}`);
+      const label = document.querySelectorAll('.step-label')[step - 1];
+      
+      indicator.className = 'step-indicator';
+      label.className = 'step-label';
+      
+      if (status === 'active') {
+        indicator.classList.add('active');
+        label.classList.add('active');
+      } else if (status === 'completed') {
+        indicator.classList.add('completed');
+      }
+    }
+
+    function updateStepContent() {
+      // Hide all steps
+      document.querySelectorAll('.step').forEach(step => {
+        step.classList.remove('active');
+      });
+      
+      // Show current step
+      document.getElementById(`step-content-${currentStep}`).classList.add('active');
+      
+      // Update header
+      document.getElementById('step-title').textContent = stepInfo[currentStep].title;
+      document.getElementById('step-description').textContent = stepInfo[currentStep].description;
+    }
+
+    function updateProgressBar() {
+      const progressLine = document.getElementById('progress-line-active');
+      const progressPercentage = ((currentStep - 1) / (totalSteps - 1)) * 100;
+      progressLine.style.width = progressPercentage + '%';
+    }
+
+    function validateCurrentStep() {
+      const currentStepElement = document.getElementById(`step-content-${currentStep}`);
+      const requiredInputs = currentStepElement.querySelectorAll('input[required]');
+      
+      for (let input of requiredInputs) {
+        if (!input.value.trim()) {
+          input.focus();
+          input.style.borderColor = '#ef4444';
+          setTimeout(() => {
+            input.style.borderColor = '';
+          }, 2000);
+          return false;
+        }
+      }
+      
+      // Additional validation for step 4 (password confirmation)
+      if (currentStep === 4) {
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirm-password').value;
+        
+        if (password !== confirmPassword) {
+          alert('Passwords do not match!');
+          document.getElementById('confirm-password').focus();
+          return false;
+        }
+        
+        if (password.length < 6) {
+          alert('Password must be at least 6 characters long!');
+          document.getElementById('password').focus();
+          return false;
+        }
+      }
+      
+      return true;
+    }
+
+    function saveCurrentStepData() {
+      const currentStepElement = document.getElementById(`step-content-${currentStep}`);
+      const inputs = currentStepElement.querySelectorAll('input');
+      
+      inputs.forEach(input => {
+        if (input.name) {
+          formData[input.name] = input.value;
+        }
+      });
+    }
+
+    // Form submission handling
+    const form = document.getElementById('registration-form');
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      
+      if (validateCurrentStep()) {
+        saveCurrentStepData();
+        
+        // Remove confirm_pass from data sent to backend
+        const submitData = { ...formData };
+        delete submitData.confirm_pass;
+        
+        // Send data to backend
+        fetch('/register', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(submitData)
+        })
+        .then(response => {
+          if (response.ok) {
+            // Show success message
+            document.getElementById('form-content').style.display = 'none';
+            document.getElementById('success-message').style.display = 'block';
+
+            // Redirect to space after 3 seconds
+            setTimeout(() => {
+              window.location.href = '/space';
+            }, 3000);
+          } else {
+            // Handle error response
+            console.error('Registration failed');
+            alert('Registration failed. Please try again.');
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('An error occurred. Please try again later.');
+        });
+      }
+    });
+
+    // Initialize progress bar
+    updateProgressBar();
+  </script>
+</body>
+
+</html>
